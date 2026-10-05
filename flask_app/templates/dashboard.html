@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding-top: 32px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
+        <div>
+            <div style="font-size: 13px; text-transform: uppercase; color: var(--primary); font-weight: 700; letter-spacing: 0.05em;">Visual Analytics</div>
+            <h1 style="font-size: 30px; font-weight: 800; color: var(--dark); letter-spacing: -0.02em;">Interactive Tableau Dashboard & Story</h1>
+        </div>
+        <div style="font-size: 14px; color: var(--gray-500);">
+            Integrated via Tableau Web Component API v3
+        </div>
+    </div>
+
+    <!-- Quick Metrics Bar -->
+    <div class="kpi-grid" style="margin-bottom: 28px;">
+        <div class="kpi-card" style="padding: 16px 20px;">
+            <div class="kpi-label">Active Sample</div>
+            <div class="kpi-value" style="font-size: 24px;">{{ stats.total_students }}</div>
+        </div>
+        <div class="kpi-card alert-danger" style="padding: 16px 20px;">
+            <div class="kpi-label">High Risk</div>
+            <div class="kpi-value" style="font-size: 24px;">{{ stats.high_risk_pct }}%</div>
+        </div>
+        <div class="kpi-card alert-warning" style="padding: 16px 20px;">
+            <div class="kpi-label">Depression</div>
+            <div class="kpi-value" style="font-size: 24px;">{{ stats.depression_pct }}%</div>
+        </div>
+        <div class="kpi-card alert-warning" style="padding: 16px 20px;">
+            <div class="kpi-label">Anxiety</div>
+            <div class="kpi-value" style="font-size: 24px;">{{ stats.anxiety_pct }}%</div>
+        </div>
+        <div class="kpi-card alert-danger" style="padding: 16px 20px;">
+            <div class="kpi-label">Untreated Need</div>
+            <div class="kpi-value" style="font-size: 24px;">{{ stats.treatment_gap_pct }}%</div>
+        </div>
+    </div>
+
+    <!-- Tableau Embed Area -->
+    <div class="tableau-container">
+        {% if tableau_view_url %}
+            <!-- Live Tableau Web Component API v3 Embed -->
+            <tableau-viz 
+                id="tableauViz" 
+                src="{{ tableau_view_url }}" 
+                width="100%" 
+                height="950px" 
+                toolbar="bottom" 
+                hide-tabs="false">
+            </tableau-viz>
+        {% else %}
+            <!-- Professional Architecture Placeholder Ready for Published URL -->
+            <div class="tableau-placeholder">
+                <div class="placeholder-icon">📊</div>
+                <h2 style="font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 12px;">
+                    Tableau Dashboard Integration Ready
+                </h2>
+                <p style="max-width: 650px; margin: 0 auto 20px auto; color: var(--gray-600); font-size: 15px;">
+                    The Flask web application architecture is fully prepared to embed the published Tableau Public dashboard. 
+                    No live Tableau Public URL has been configured yet in <code>.env</code>.
+                </p>
+
+                <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px; max-width: 700px; margin: 0 auto; text-align: left;">
+                    <h3 style="font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 10px;">
+                        Quick Steps to Connect Your Live Tableau Public Dashboard:
+                    </h3>
+                    <ol style="padding-left: 20px; font-size: 14px; color: var(--gray-700); line-height: 1.8;">
+                        <li>Open <strong>Tableau Desktop 2026.1</strong> with <code>C:\Skillwallet\data\processed\student_mental_health_cleaned.csv</code>.</li>
+                        <li>Build your worksheets and dashboard as documented in <code>tableau/dashboard_design.md</code>.</li>
+                        <li>Click <strong>Server &rarr; Tableau Public &rarr; Save to Tableau Public As...</strong> and sign in.</li>
+                        <li>Copy your published view link (e.g. <code>https://public.tableau.com/views/AnalysingMentalHealth/...</code>).</li>
+                        <li>Paste your link into <code>C:\Skillwallet\.env</code> under <code>TABLEAU_VIEW_URL=...</code> and restart Flask!</li>
+                    </ol>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Storyboard Embed Section -->
+    {% if tableau_story_url %}
+    <div class="card" style="margin-top: 32px;">
+        <h2 class="card-title">Interactive Storyboard Narrative</h2>
+        <tableau-viz 
+            id="tableauStoryViz" 
+            src="{{ tableau_story_url }}" 
+            width="100%" 
+            height="900px" 
+            toolbar="bottom">
+        </tableau-viz>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

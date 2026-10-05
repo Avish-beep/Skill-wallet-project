@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-subtitle">SkillWallet Applied Analytics &bull; Healthcare Domain</div>
+        <h1 class="hero-title">Analysing Mental Health in Student Ecosystem</h1>
+        <p class="hero-desc">
+            An empirical investigation into undergraduate psychological well-being, comorbidity severity, academic pressure correlations, and institutional treatment gaps.
+        </p>
+        <div class="hero-badges">
+            <span class="badge">Tableau Desktop 2026.1</span>
+            <span class="badge">Python 3.11</span>
+            <span class="badge">Flask Web App</span>
+            <span class="badge">101 Verified Student Responses</span>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Executive KPI Row -->
+    <div class="kpi-grid">
+        <div class="kpi-card alert-primary">
+            <div class="kpi-label">Surveyed Cohort</div>
+            <div class="kpi-value">{{ stats.total_students }}</div>
+            <div class="kpi-subtext">Active Undergraduate Respondents</div>
+        </div>
+        <div class="kpi-card alert-danger">
+            <div class="kpi-label">High-Risk Cohort</div>
+            <div class="kpi-value">{{ stats.high_risk_count }}</div>
+            <div class="kpi-subtext">{{ stats.high_risk_pct }}% with &ge;2 concurrent conditions</div>
+        </div>
+        <div class="kpi-card alert-warning">
+            <div class="kpi-label">Depression Prevalence</div>
+            <div class="kpi-value">{{ stats.depression_count }}</div>
+            <div class="kpi-subtext">{{ stats.depression_pct }}% reporting clinical symptoms</div>
+        </div>
+        <div class="kpi-card alert-warning">
+            <div class="kpi-label">Anxiety Prevalence</div>
+            <div class="kpi-value">{{ stats.anxiety_count }}</div>
+            <div class="kpi-subtext">{{ stats.anxiety_pct }}% reporting chronic anxiety</div>
+        </div>
+        <div class="kpi-card alert-danger">
+            <div class="kpi-label">Campus Treatment Gap</div>
+            <div class="kpi-value">{{ stats.treatment_gap_pct }}%</div>
+            <div class="kpi-subtext">Symptomatic students without specialist care</div>
+        </div>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid-2">
+        <div class="card">
+            <h2 class="card-title">Project Problem Statement</h2>
+            <p>
+                Student mental health in higher education institutions has emerged as a silent epidemic. Accelerated academic demands, transitional life stress, and social pressures frequently trigger depressive symptoms, anxiety disorders, and acute panic episodes.
+            </p>
+            <p style="margin-top: 14px;">
+                Despite rising distress levels, stigmatization and institutional opacity obscure the true magnitude of student suffering. This project bridges this information gap through rigorous exploratory data analysis, visual storytelling in Tableau, and an integrated web dissemination portal.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Key Analytical Objectives</h2>
+            <ul style="padding-left: 20px; line-height: 1.8;">
+                <li>Quantify baseline prevalence of depression, anxiety, and panic attacks across undergraduate cohorts.</li>
+                <li>Stratify respondents into clinically grounded risk categories (Low, Moderate, High Risk).</li>
+                <li>Evaluate academic standing (CGPA) and seniority (Year of Study) as potential correlates of psychological vulnerability.</li>
+                <li>Quantify the campus <strong>treatment gap</strong> to provide empirical justification for institutional counseling expansion.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="text-align: center; background: #EEF2FF; border-color: #C7D2FE;">
+        <h2 class="card-title" style="color: #312E81;">Explore the Interactive Tableau Dashboard</h2>
+        <p style="max-width: 650px; margin: 0 auto 20px auto; color: #4338CA;">
+            Interact with dynamic cross-filtering by gender, academic discipline, and seniority levels directly within our web portal.
+        </p>
+        <a href="{{ url_for('dashboard') }}" class="badge" style="background: #4F46E5; padding: 12px 28px; font-size: 15px; text-decoration: none;">
+            Launch Interactive Dashboard &rarr;
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding-top: 32px;">
+    <div style="margin-bottom: 28px;">
+        <div style="font-size: 13px; text-transform: uppercase; color: var(--primary); font-weight: 700; letter-spacing: 0.05em;">Project Information</div>
+        <h1 style="font-size: 30px; font-weight: 800; color: var(--dark); letter-spacing: -0.02em;">About the Study & System Architecture</h1>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">SkillWallet Applied Analytics Project</h2>
+        <p><strong>Project Title:</strong> Analysing Mental Health in Student Ecosystem</p>
+        <p><strong>Domain:</strong> Healthcare & Higher Education Analytics</p>
+        <p><strong>Course/Module:</strong> Data Analytics with Tableau (VIP Program)</p>
+        <p><strong>Curriculum Scope:</strong> 8 Epics &bull; 14 Total Tasks &bull; 9 Subtasks</p>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <h2 class="card-title">Technology Stack</h2>
+            <ul style="padding-left: 20px; line-height: 1.8;">
+                <li><strong>Tableau Desktop 2026.1:</strong> Visual analytics, calculated fields, interactive dashboards, and narrative story points.</li>
+                <li><strong>Python 3.11.9:</strong> Data preprocessing, statistical validation, and ETL pipelines using <code>pandas</code> and <code>numpy</code>.</li>
+                <li><strong>Flask 3.1.3:</strong> Lightweight web server embedding visual assets via Tableau Web Component API v3.</li>
+                <li><strong>GitHub:</strong> Version control, branch management, and collaborative portfolio hosting.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Methodology & Ethics</h2>
+            <p>
+                All student records are completely anonymized with synthetic surrogate keys (<code>STD_0001</code> to <code>STD_0101</code>). 
+                Zero synthetic bias or artificial records were injected. Missing values in demographic fields were imputed using cohort medians, and categorical ordinal scales were standardized to preserve survey fidelity.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

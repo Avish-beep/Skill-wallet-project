@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding-top: 32px;">
+    <div style="margin-bottom: 28px;">
+        <div style="font-size: 13px; text-transform: uppercase; color: var(--primary); font-weight: 700; letter-spacing: 0.05em;">Analytical Findings</div>
+        <h1 style="font-size: 30px; font-weight: 800; color: var(--dark); letter-spacing: -0.02em;">Empirical Insights & Departmental Cross-Tabs</h1>
+    </div>
+
+    <!-- Core Takeaway Cards -->
+    <div class="grid-2">
+        <div class="card">
+            <h2 class="card-title">1. The Triad of Psychological Burden</h2>
+            <p>
+                Analysis of the 101 undergraduate respondents reveals an extraordinarily high co-occurrence of symptoms:
+            </p>
+            <ul style="padding-left: 20px; margin-top: 12px; line-height: 1.8;">
+                <li><strong>Depression:</strong> {{ stats.depression_count }} students ({{ stats.depression_pct }}%) suffer from clinical depressive symptoms.</li>
+                <li><strong>Anxiety:</strong> {{ stats.anxiety_count }} students ({{ stats.anxiety_pct }}%) experience recurrent generalized anxiety.</li>
+                <li><strong>Panic Attacks:</strong> {{ stats.panic_count }} students ({{ stats.panic_pct }}%) report acute panic episodes.</li>
+                <li><strong>Comorbidity:</strong> 16 students (15.8%) endure all three conditions concurrently, indicating severe multi-condition vulnerability.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">2. The 90.5% Campus Treatment Void</h2>
+            <p>
+                The starkest disparity surfaced by this dataset is the gap between clinical need and healthcare utilization:
+            </p>
+            <ul style="padding-left: 20px; margin-top: 12px; line-height: 1.8;">
+                <li>63 out of 101 students report at least one diagnosable mental health condition.</li>
+                <li>Yet, only <strong>6 of those 63 students</strong> sought professional counseling or medical consultation.</li>
+                <li><strong>{{ stats.treatment_gap_pct }}% of suffering students</strong> navigate their symptoms without institutional or professional assistance.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Departmental / Faculty Breakdown Table -->
+    <div class="card">
+        <h2 class="card-title">Disciplinary Risk Profiles (Faculty Breakdown)</h2>
+        <p style="color: var(--gray-600); margin-bottom: 16px;">
+            Aggregation of student risk classifications across higher education faculties:
+        </p>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Academic Faculty</th>
+                    <th>Surveyed Students</th>
+                    <th>High-Risk Students (&ge;2 conditions)</th>
+                    <th>High-Risk %</th>
+                    <th>Depression Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fac in faculties %}
+                <tr>
+                    <td><strong>{{ fac.faculty }}</strong></td>
+                    <td>{{ fac.total }}</td>
+                    <td>{{ fac.high_risk }}</td>
+                    <td><span class="badge" style="background: {% if fac.high_risk_pct > 35 %}#FEE2E2; color: #991B1B{% else %}#E0E7FF; color: #3730A3{% endif %};">{{ fac.high_risk_pct }}%</span></td>
+                    <td>{{ fac.depression }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Academic Standing (CGPA) Breakdown -->
+    <div class="card">
+        <h2 class="card-title">Academic Standing (CGPA) vs. Mental Health Prevalence</h2>
+        <p style="color: var(--gray-600); margin-bottom: 16px;">
+            Evaluating whether academic achievement buffers against or exacerbates psychological distress:
+        </p>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>CGPA Tier</th>
+                    <th>Student Count</th>
+                    <th>Depression Rate (%)</th>
+                    <th>Anxiety Rate (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tier in academic_tiers %}
+                <tr>
+                    <td><code>{{ tier.cgpa_range }}</code></td>
+                    <td>{{ tier.total }}</td>
+                    <td>{{ tier.depression_rate }}%</td>
+                    <td>{{ tier.anxiety_rate }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p style="font-size: 13px; color: var(--gray-500); margin-top: 12px;">
+            *Notice that high GPA tiers (e.g. 3.50 - 4.00) experience comparable depression and anxiety rates to lower tiers, disproving the misconception that academic success protects against mental distress.
+        </p>
+    </div>
+</div>
+{% endblock %}
