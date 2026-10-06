@@ -3,8 +3,8 @@
 
 | Epic # | Epic Name | Complexity | Estimated Duration | Status | Notes |
 | :---: | :--- | :---: | :---: | :---: | :--- |
-| **Epic 1** | **Data Collection & Extraction from Database** | **Medium** | **5 hours** | **In Progress** | Current Task: Downloading the dataset; Subtask: Understand the data |
-| **Epic 2** | Data Preparation | Medium | 6 hours | **Not Started** | Scheduled for next phase |
+| **Epic 1** | **Data Collection & Extraction from Database** | **Medium** | **5 hours** | **Completed** | Ingested baseline data, validated schema, audited data dictionary. |
+| **Epic 2** | **Data Preparation** | **Medium** | **6 hours** | **Completed** | Full ETL pipeline executed, 1 missing value imputed, 12 features engineered, 101 rows × 23 columns verified. |
 | **Epic 3** | Data Visualization | High | 8 hours | **Not Started** | Scheduled for next phase |
 | **Epic 4** | Dashboard | High | 6 hours | **Not Started** | Scheduled for next phase |
 | **Epic 5** | Story | Medium | 4 hours | **Not Started** | Scheduled for next phase |
