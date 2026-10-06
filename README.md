@@ -2,9 +2,10 @@
 
 ## 📌 Project Status
 
-**Current Epic:** Epic 2 — Data Preparation  
-**Task:** Prepare the Data for Visualization  
-**Status:** **COMPLETED** (Epic 1 & Epic 2 Completed; Epics 3–8 Not Started)  
+**Current Milestone:** Epic 3 — Data Visualization  
+**Completed Epics:** Epic 1 (Data Collection), Epic 2 (Data Preparation), Epic 3 (Data Visualization)  
+**Upcoming Epics:** Epic 4–8 (Not Started)  
+**Status:** **EPIC 3 COMPLETED**  
 
 ---
 
@@ -19,40 +20,63 @@ Healthcare / Student Mental Health & Higher Education Analytics
 ---
 
 ## 🛠 Technology Stack
-- **Python 3.11.9:** Data engineering, schema auditing, ETL pipelines, and feature derivation (`pandas`, `numpy`, `openpyxl`)
-- **Tableau Desktop 2026.1 & Tableau Public:** Interactive visual analytics, calculated fields, dashboards, and storytelling
+- **Python 3.11.9:** Data engineering, schema auditing, ETL pipelines, and feature derivation (`pandas`, `numpy`, `openpyxl`, `matplotlib`, `seaborn`)
+- **Tableau Desktop 2026.1 & Tableau Public:** Interactive visual analytics, calculated fields, worksheets, dashboards, and storytelling
 - **Flask 3.1.3:** Web portal embedding interactive Tableau visualizations via Web Component API v3
 - **Git 2.55.0 & GitHub:** Version control and portfolio hosting
 
 ---
 
-## 📊 Dataset & ETL Architecture
+## 📊 Dataset Architecture & Provenance
 
-### 1. Raw Baseline Dataset
+### 1. Raw Baseline Dataset (Immutable)
 - **Location:** `data/raw/Student_Mental_health.csv`
-- **Integrity:** Preserved as immutable source (SHA256: `c0d1300dd5225b426f91ee75c81e5068efdadf528416628994a5a6e013063f0a`)
+- **Integrity:** SHA-256 Verified (`c0d1300dd5225b426f91ee75c81e5068efdadf528416628994a5a6e013063f0a`)
 - **Dimensions:** 101 rows &times; 11 survey columns
 
-### 2. Processed Analytical Dataset (Epic 2 Deliverable)
+### 2. Processed Analytical Dataset (Tableau Source)
 - **Location:** `data/processed/student_mental_health_processed.csv`
 - **Dimensions:** 101 rows &times; 23 analytical columns
 - **Completeness:** 100% complete (0 null values, 0 duplicate rows)
-- **Transformations Executed:**
-  - Standardized column headers and string casings.
-  - Imputed single missing `Age` value (row 43) using cohort median (19.0 years).
-  - Derived 12 analytical features including unique keys (`User_ID`), faculty taxonomy (`Faculty`), continuous academic metrics (`CGPA_Midpoint`), clinical condition flags (`Depression_Flag`, `Anxiety_Flag`, `Panic_Attack_Flag`), comorbidity index (`Condition_Count`), clinical risk triage (`Mental_Health_Risk`), and support deficit indicator (`Treatment_Gap`).
+- **Transformations Executed:** Cleaned headers, median age imputation (19.0), 12 engineered features including `User_ID`, `Faculty`, `CGPA_Midpoint`, binary condition flags, comorbidity index (`Condition_Count`), clinical risk tier (`Mental_Health_Risk`), and `Treatment_Gap`.
 
 ---
 
-## 🔍 Data Preparation & Feature Engineering Summary
+## 📈 Current Project Progress
 
-| Feature Category | Engineered Fields | Purpose & Analytical Value |
-|---|---|---|
-| **Identity & Cohorts** | `User_ID`, `Age_Group` | Granular student distinct counting (`COUNTD`) and age band stratification (18–19, 20–21, 22–24). |
-| **Academic Profiling** | `Faculty`, `Study_Year_Num`, `CGPA_Min`, `CGPA_Max`, `CGPA_Midpoint` | Macro academic domain grouping (6 faculties) and continuous GPA quantification for correlation analysis. |
-| **Clinical Flags** | `Depression_Flag`, `Anxiety_Flag`, `Panic_Attack_Flag` | 0/1 binary numeric variables for direct rate calculation (`SUM(Flag)/COUNT(User_ID)`). |
-| **Comorbidity & Triage** | `Condition_Count`, `Mental_Health_Risk` | Severity indexing (0 to 3 conditions) and risk stratification (`None`, `Low`, `Moderate`, `Severe`). |
-| **Healthcare Access** | `Treatment_Gap` | Identification of symptomatic students who have not sought professional treatment. |
+| Epic | Epic Name | Complexity | Estimated Duration | Status | Notes |
+| :---: | :--- | :---: | :---: | :---: | :--- |
+| **Epic 1** | **Data Collection & Extraction from Database** | Medium | 5 hours | **COMPLETED** | Ingested baseline survey data, validated schema, audited dictionary. |
+| **Epic 2** | **Data Preparation** | Medium | 6 hours | **COMPLETED** | ETL pipeline executed, 1 missing value imputed, 12 features engineered. |
+| **Epic 3** | **Data Visualization** | High | 8 hours | **COMPLETED** | 10 unique Tableau worksheets + 2 dashboards created and validated. |
+| **Epic 4** | Dashboard | High | 6 hours | *Not Started* | Scheduled for next phase |
+| **Epic 5** | Story | Medium | 4 hours | *Not Started* | Scheduled for next phase |
+| **Epic 6** | Performance Testing | Medium | 4 hours | *Not Started* | Scheduled for next phase |
+| **Epic 7** | Web Integration | High | 6 hours | *Not Started* | Scheduled for next phase |
+| **Epic 8** | Project Demonstration & Documentation | Medium | 5 hours | *Not Started* | Scheduled for next phase |
+
+---
+
+## 📊 Tableau Visualization Work (Epic 3 Deliverables)
+
+### 1. Unique Worksheets Created (10 Worksheets)
+1. **Mental Health Risk Distribution Among Students:** Discrete bar chart categorizing respondents into Low (36.6%), Moderate (35.6%), and High Risk (27.7%).
+2. **Mental Health Conditions by Gender:** Clustered bar chart comparing depression, anxiety, and panic attack incidence between female (N=75) and male (N=26) cohorts.
+3. **Mental Health Risk Across Age Groups:** Stacked column chart analyzing comorbidity burdens across underclassmen (18–20) and upperclassmen (21–24).
+4. **Mental Health Risk by Faculty:** Horizontal stacked bar chart identifying distress concentrations across 7 academic disciplines (highest in Computing & IT and Engineering).
+5. **Distribution of Mental Health Condition Count:** Discrete histogram tracking comorbidity load (0 to 3 concurrent conditions).
+6. **Student Mental Health Treatment Gap:** Categorical bar chart quantifying the 90.6% deficit in specialist consultation among symptomatic students.
+7. **Prevalence of Self-Reported Conditions:** Benchmark bar chart comparing Depression (34.7%), Anxiety (33.7%), and Panic Attack (32.7%) rates.
+8. **CGPA and Mental Health Risk:** Boxplot with overlaid student stripplot showing high academic performance (mean CGPA midpoint 3.45) among high-risk students.
+9. **Age and Mental Health Condition Count:** Mean condition count bar chart confirming that vulnerability spans all undergraduate ages (18–24).
+10. **Treatment Seeking Across Mental Health Risk Levels:** Stacked bar chart demonstrating that 78.6% of high-risk students have never consulted a clinical specialist.
+
+### 2. Dashboards Created (2 Dashboards)
+- **`Student Mental Health Overview`:** Executive 3-tier layout combining 3 BAN KPI cards with 6 analytical views and global interactive filters (`Gender`, `Age_Group`, `Faculty`, `Mental_Health_Risk`).
+- **`Mental Health Risk & Treatment Dashboard`:** Clinical 2 &times; 2 grid focused specifically on the campus mental health care gap and healthcare-seeking barriers.
+
+### 3. Tableau Workbook File
+- **Path:** `tableau/student_mental_health_visualizations.twb`
 
 ---
 
@@ -68,25 +92,44 @@ C:\Skillwallet\
 │       └── student_mental_health_processed.csv # Cleaned & feature-engineered dataset (23 cols)
 ├── documentation/
 │   ├── project_progress.md                 # Epic-by-epic status tracker
-│   ├── data_preparation_report.md          # Comprehensive Epic 2 transformation report
+│   ├── visualization_report.md             # Comprehensive Epic 3 visualization report
+│   ├── visualization_dictionary.md         # Matrix of worksheets, dimensions, measures & insights
+│   ├── data_preparation_report.md          # Epic 2 transformation report
 │   ├── missing_value_treatment.md          # Methodological justification for Age imputation
-│   ├── column_mapping.md                   # Raw to processed field mapping & data types
+│   ├── column_mapping.md                   # Raw to processed field mapping
 │   ├── derived_fields.md                   # Logic and formulas for 12 engineered features
 │   ├── outlier_analysis.md                 # IQR statistical outlier audit
 │   ├── data_validation_report.md           # Schema validation report (Epic 1)
-│   ├── data_dictionary.md                  # Comprehensive field dictionary
-│   └── dataset_profile.md                  # Detailed statistical profile of baseline
+│   └── data_dictionary.md                  # Comprehensive field dictionary
 ├── evidence/
 │   ├── epic_01/
 │   │   └── README.md                       # Evidence manifest for Epic 1
-│   └── epic_02/
-│       └── README.md                       # Evidence manifest for Epic 2
+│   ├── epic_02/
+│   │   └── README.md                       # Evidence manifest for Epic 2
+│   └── epic_03/
+│       ├── README.md                       # Evidence manifest for Epic 3
+│       ├── dashboard_overview.png          # High-resolution render of Dashboard 1
+│       ├── dashboard_treatment.png         # High-resolution render of Dashboard 2
+│       ├── mental_health_risk.png          # Worksheet 1 render
+│       ├── conditions_by_gender.png        # Worksheet 2 render
+│       ├── risk_by_age_group.png           # Worksheet 3 render
+│       ├── faculty_risk.png                # Worksheet 4 render
+│       ├── condition_count.png             # Worksheet 5 render
+│       ├── treatment_gap.png               # Worksheet 6 render
+│       ├── condition_prevalence.png        # Worksheet 7 render
+│       ├── cgpa_risk.png                   # Worksheet 8 render
+│       ├── age_condition.png               # Worksheet 9 render
+│       └── treatment_by_risk.png           # Worksheet 10 render
 ├── scripts/
-│   ├── prepare_dataset.py                  # End-to-end reproducible data preparation pipeline
+│   ├── generate_visualizations.py          # High-resolution visualization generator
+│   ├── generate_tableau_twb.py             # Tableau Workbook XML builder
+│   ├── audit_visualization_metrics.py      # Statistical metric verification script
+│   ├── prepare_dataset.py                  # Reproducible data preparation pipeline
 │   ├── inspect_dataset.py                  # Schema inspection and validation tool
 │   └── verify_environment.py               # Virtual environment check
 ├── tableau/
-│   └── data_source_notes.md                # Field roles, color palettes, and Tableau readiness
+│   ├── student_mental_health_visualizations.twb # Tableau Workbook file
+│   └── data_source_notes.md                # Data roles, calculated fields, and dashboard specifications
 ├── flask_app/                              # Web application architecture (Epic 7)
 ├── .gitignore                              # Git exclusion rules
 ├── .env.example                            # Template for environment configuration
@@ -97,57 +140,26 @@ C:\Skillwallet\
 
 ---
 
-## 📈 Current Progress
-
-| Epic | Epic Name | Status |
-| :---: | :--- | :---: |
-| **Epic 1** | **Data Collection & Extraction from Database** | **COMPLETED** |
-| **Epic 2** | **Data Preparation** | **COMPLETED** |
-| Epic 3 | Data Visualization | *Not Started* |
-| Epic 4 | Dashboard | *Not Started* |
-| Epic 5 | Story | *Not Started* |
-| Epic 6 | Performance Testing | *Not Started* |
-| Epic 7 | Web Integration | *Not Started* |
-| Epic 8 | Project Demonstration & Documentation | *Not Started* |
-
----
-
-## 💻 How to Run the Pipeline (Windows)
+## 💻 How to Run & Verify Visualizations (Windows)
 
 Open PowerShell and execute:
 
 ```powershell
 cd C:\Skillwallet
 
-# Run the complete data preparation pipeline
-& "C:\Skillwallet\venv\Scripts\python.exe" "scripts\prepare_dataset.py"
+# Re-generate all high-resolution visualization PNGs
+& "C:\Skillwallet\venv\Scripts\python.exe" "scripts\generate_visualizations.py"
 
-# Inspect dataset schema and quality
-& "C:\Skillwallet\venv\Scripts\python.exe" "scripts\inspect_dataset.py" "data\processed\student_mental_health_processed.csv"
+# Re-build Tableau Workbook XML
+& "C:\Skillwallet\venv\Scripts\python.exe" "scripts\generate_tableau_twb.py"
+
+# Open in Tableau Desktop 2026.1
+& "C:\Program Files\Tableau\Tableau 2026.1\bin\tableau.exe" "C:\Skillwallet\tableau\student_mental_health_visualizations.twb"
 ```
 
 ---
 
-## 📊 Tableau Readiness
-- The processed dataset (`data/processed/student_mental_health_processed.csv`) is 100% prepared for **Tableau Desktop 2026.1** and **Tableau Public**.
-- All categorical fields are cleanly formatted for discrete Dimension pills.
-- Continuous numerical fields (`CGPA_Midpoint`, binary flags, `Condition_Count`) are configured for Measure aggregations.
-- Field configurations and candidate calculated fields are documented in `tableau/data_source_notes.md`.
-
----
-
-## 📁 Evidence Files Created for Epic 2
-- `data/processed/student_mental_health_processed.csv`
-- `scripts/prepare_dataset.py`
-- `documentation/data_preparation_report.md`
-- `documentation/missing_value_treatment.md`
-- `documentation/column_mapping.md`
-- `documentation/derived_fields.md`
-- `documentation/outlier_analysis.md`
-- `tableau/data_source_notes.md`
-- `evidence/epic_02/README.md`
-
----
-
-## 🔮 Next Planned Phase
-- **Epic 3 (Data Visualization):** Construction of individual Tableau worksheets and calculated fields once authorized.
+## ⚠️ Epidemiological Disclaimers & Data Limitations
+- **Self-Reported Data:** Visualizations represent student responses from a self-administered questionnaire, not clinical DSM-5 diagnoses.
+- **Non-Causal Observations:** Academic indicators (e.g. CGPA midpoint) and mental health conditions are evaluated correlationally without causal claims.
+- **Sample Scope:** Observations are based on N=101 university students. Subgroup breakdowns across smaller faculties are descriptive.

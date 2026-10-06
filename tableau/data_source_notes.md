@@ -1,92 +1,118 @@
-# Tableau Data Source Notes (Epic 2 — Data Preparation & Source Specification)
+# Tableau Data Source Notes (Epic 3 — Visual Analytics & Workbook Integration)
 ## Project: Analysing Mental Health in Student Ecosystem
 
-This document defines the schema, field roles, and configuration requirements for connecting **Tableau Desktop 2026.1** and **Tableau Public** to the prepared dataset generated in Epic 2.
+This document provides complete technical specifications for the Tableau workbook, data connections, calculated fields, individual visualization worksheets, and interactive dashboards created for **Epic 3: Data Visualization**.
 
 ---
 
-### 1. Data Connection Specifications
+### 1. Data Connection & Source Specifications
 
-- **Primary Processed Dataset:** `data/processed/student_mental_health_processed.csv`
-- **Fallback / Raw Dataset:** `data/raw/Student_Mental_health.csv`
-- **Format:** Comma-Separated Values (`.csv`, UTF-8 encoding)
-- **Record Count:** 101 rows (100% complete, 0 nulls, 0 duplicate rows)
-- **Field Count:** 23 columns (11 standardized raw features + 1 lineage column + 11 engineered analytical features)
-- **Recommended Connection Mode:** Tableau Extract (`.hyper`) or Live Text File connection.
-
----
-
-### 2. Full 23-Field Tableau Role Mapping & Data Types
-
-| # | Field Name | Tableau Data Type | Tableau Role | Default Aggregation | Analytical Purpose & Visualization Usage |
-|---|---|---|---|---|---|
-| 1 | `User_ID` | String / Text | Dimension | `COUNTD` | Unique respondent identifier (`STD_0001`–`STD_0101`) for granular student tracking and distinct counts. |
-| 2 | `Timestamp` | Date & Time | Dimension | `YEAR`, `MONTH` | Survey submission timestamp for response date distributions. |
-| 3 | `Gender` | String | Dimension | None | Demographic breakdown (`Female`, `Male`) for comparative equity views. |
-| 4 | `Age` | Whole Number | Dimension / Measure | `AVG`, `MEDIAN` | Respondent age (18–24 years; median 19.0 imputed for row index 43). |
-| 5 | `Course` | String | Dimension | None | Standardized degree program / major (cleaned casing). |
-| 6 | `Year_of_Study` | String | Dimension | None | Standardized academic year label (`year 1`, `year 2`, `year 3`, `year 4`). |
-| 7 | `CGPA_Range` | String (Ordinal) | Dimension | None | Academic performance tier (`0 - 1.99`, `2.00 - 2.49`, `2.50 - 2.99`, `3.00 - 3.49`, `3.50 - 4.00`). |
-| 8 | `Marital_Status` | String | Dimension | None | Marital status indicator (`No`, `Yes`). |
-| 9 | `Depression` | String | Dimension | None | Categorical self-reported depression status (`Yes`, `No`). |
-| 10 | `Anxiety` | String | Dimension | None | Categorical self-reported anxiety status (`Yes`, `No`). |
-| 11 | `Panic_Attack` | String | Dimension | None | Categorical self-reported panic attack status (`Yes`, `No`). |
-| 12 | `Treatment_Sought` | String | Dimension | None | Health-seeking behavior indicator (`Yes`, `No`). |
-| 13 | `Course_Raw` | String | Dimension | None | Unmodified raw course strings preserved for data lineage audit. |
-| 14 | `Faculty` | String | Dimension | None | Academic discipline grouping (`Engineering`, `Computing & IT`, `Humanities & Social Sciences`, `Islamic Studies & Education`, `Business & Economics`, `Allied Health Sciences`, `Natural Sciences & General`). |
-| 15 | `CGPA_Midpoint` | Decimal Number | Measure | `AVG` | Continuous proxy for GPA (1.00, 2.25, 2.75, 3.25, 3.75) enabling scatter plots, boxplots, and trendlines. |
-| 16 | `Age_Group` | String (Ordinal) | Dimension | None | Age cohorts (`18-20 (Underclassmen)`, `21-24 (Upperclassmen)`). |
-| 17 | `Depression_Flag` | Whole Number | Measure | `SUM`, `AVG` | Binary flag (1 = Yes, 0 = No) for rate calculation (`SUM([Depression_Flag]) / COUNT([User_ID])`). |
-| 18 | `Anxiety_Flag` | Whole Number | Measure | `SUM`, `AVG` | Binary flag (1 = Yes, 0 = No) for prevalence calculation. |
-| 19 | `Panic_Attack_Flag`| Whole Number | Measure | `SUM`, `AVG` | Binary flag (1 = Yes, 0 = No) for incidence calculation. |
-| 20 | `Treatment_Sought_Flag` | Whole Number | Measure | `SUM`, `AVG` | Binary flag (1 = Yes, 0 = No) for treatment rate calculation. |
-| 21 | `Condition_Count` | Whole Number | Measure / Dimension | `AVG`, `DISTRIBUTION` | Comorbidity severity index (0 = healthy, 1 = single issue, 2 = dual issue, 3 = triply symptomatic). |
-| 22 | `Mental_Health_Risk`| String (Ordinal) | Dimension | None | Risk triage category (`Low Risk` [0 conditions], `Moderate Risk` [1 condition], `High Risk` [2-3 conditions]). |
-| 23 | `Treatment_Gap` | String / Dimension | Dimension | None | Categorical healthcare status (`Treatment Gap (Symptomatic, No Treatment)`, `Sought Treatment`, `No Symptoms`). |
+- **Tableau Workbook File:** `tableau/student_mental_health_visualizations.twb`
+- **Primary Data Source Path:** `data/processed/student_mental_health_processed.csv`
+- **Fallback / Raw Path (Immutable):** `data/raw/Student_Mental_health.csv`
+- **Connection Type:** In-memory Text File connection (UTF-8 encoded CSV)
+- **Record Count:** 101 records (100% complete, 0 missing values, 0 duplicates)
+- **Field Count:** 23 columns (11 standardized raw features + 1 lineage column + 11 engineered features)
+- **Target Software:** Tableau Desktop 2026.1 (64-bit) & Tableau Public
 
 ---
 
-### 3. Key Tableau Configurations & Visual Best Practices
+### 2. Fields Used Across Visualizations
 
-1. **Default Sort Orders:**
-   - `Mental_Health_Risk`: Set manual sort order &rarr; `Low Risk` &rarr; `Moderate Risk` &rarr; `High Risk`.
-   - `CGPA_Range`: Set manual sort order &rarr; `0 - 1.99` &rarr; `2.00 - 2.49` &rarr; `2.50 - 2.99` &rarr; `3.00 - 3.49` &rarr; `3.50 - 4.00`.
-   - `Year_of_Study`: Set manual sort order &rarr; `year 1` &rarr; `year 2` &rarr; `year 3` &rarr; `year 4`.
-   - `Age_Group`: Set manual sort order &rarr; `18-20 (Underclassmen)` &rarr; `21-24 (Upperclassmen)`.
-
-2. **Color Palette Recommendations (Healthcare Theme):**
-   - `Mental_Health_Risk`:
-     - `Low Risk`: Calm Soft Green (`#2CA02C` or `#48BB78`)
-     - `Moderate Risk`: Amber Orange (`#FF7F0E` or `#ED8936`)
-     - `High Risk`: Clinical Crimson (`#D62728` or `#E53E3E`)
-   - `Gender`:
-     - `Female`: Soft Purple (`#9467BD`)
-     - `Male`: Steel Blue (`#1F77B4`)
-
-3. **Global Dashboard Interactive Filters:**
-   - `Faculty` (Dropdown with 'All')
-   - `Gender` (Radio buttons / compact list)
-   - `Year_of_Study` (Dropdown)
-   - `Mental_Health_Risk` (Checklist / Visual legend filter)
-   - `Treatment_Gap` (Dropdown filter)
+| Field Name | Data Type | Tableau Role | Used In Worksheets | Analytical Function |
+|---|---|---|---|---|
+| `User_ID` | String | Dimension | WS 1–10, Dashboards | Granular student primary key (`COUNTD([User_ID])`). |
+| `Gender` | String | Dimension | WS 2, Filters, Dashboards | Demographic disaggregation (`Female`, `Male`). |
+| `Age` | Integer | Dimension / Measure | WS 9, Dashboards | Chronological respondent age (18–24). |
+| `Age_Group` | String | Dimension (Ordinal) | WS 3, Filters, Dashboards | Binned cohorts (`18-20 (Underclassmen)`, `21-24 (Upperclassmen)`). |
+| `Faculty` | String | Dimension | WS 4, Filters, Dashboards | 7 macro academic disciplines. |
+| `Course` | String | Dimension | Detail / Tooltips | Standardized degree programs (43 majors). |
+| `Year_of_Study` | String | Dimension | Filters / Detail | Standardized study year (`year 1`–`year 4`). |
+| `CGPA_Range` | String | Dimension (Ordinal) | Detail / Tooltips | Ordinal grade categories. |
+| `CGPA_Midpoint` | Real (Float) | Measure | WS 8 | Continuous proxy for GPA (1.00–3.75). |
+| `Depression_Flag` | Integer | Measure | WS 2, WS 7, Dashboards | Binary condition indicator (1/0). |
+| `Anxiety_Flag` | Integer | Measure | WS 2, WS 7, Dashboards | Binary condition indicator (1/0). |
+| `Panic_Attack_Flag`| Integer | Measure | WS 2, WS 7, Dashboards | Binary condition indicator (1/0). |
+| `Condition_Count` | Integer | Measure / Dimension | WS 5, WS 9, Dashboards | Comorbidity sum (0–3 concurrent conditions). |
+| `Mental_Health_Risk`| String | Dimension (Ordinal) | WS 1, 3, 4, 8, 10, Filters | Clinical risk classification (`Low Risk`, `Moderate Risk`, `High Risk`). |
+| `Treatment_Gap` | String | Dimension | WS 6, Dashboards | Status: `Untreated Condition`, `No Identified Condition`, `Condition Treated`. |
+| `Treatment_Sought` | String | Dimension | WS 10, Dashboards | Professional healthcare seeking (`Yes`, `No`). |
 
 ---
 
-### 4. Calculated Field Formulas for Tableau (Reference for Epic 3)
+### 3. Tableau Calculated Fields Created
 
-- **Prevalence Rate (%):**
-  `SUM([Depression_Flag]) / COUNT([User_ID])`
-- **Comorbidity Rate (%):**
-  `COUNT(IF [Condition_Count] >= 2 THEN [User_ID] END) / COUNT([User_ID])`
-- **Treatment Gap Count:**
-  `COUNT(IF [Treatment_Gap] = 'Treatment Gap (Symptomatic, No Treatment)' THEN [User_ID] END)`
-- **Treatment Gap Rate (%):**
-  `COUNT(IF [Treatment_Gap] = 'Treatment Gap (Symptomatic, No Treatment)' THEN [User_ID] END) / COUNT(IF [Condition_Count] > 0 THEN [User_ID] END)`
+The following calculated fields are embedded within `tableau/student_mental_health_visualizations.twb`:
+
+1. **`[Total_Students_Calc]`**:
+   ```tableau
+   COUNTD([User_ID])
+   ```
+2. **`[High_Risk_Count_Calc]`**:
+   ```tableau
+   COUNTD(IF [Mental_Health_Risk] = 'High Risk' THEN [User_ID] END)
+   ```
+3. **`[High_Risk_Pct_Calc]`**:
+   ```tableau
+   [High_Risk_Count_Calc] / [Total_Students_Calc]
+   ```
+4. **`[Moderate_Risk_Count_Calc]`**:
+   ```tableau
+   COUNTD(IF [Mental_Health_Risk] = 'Moderate Risk' THEN [User_ID] END)
+   ```
+5. **`[Treatment_Gap_Count_Calc]`**:
+   ```tableau
+   COUNTD(IF [Treatment_Gap] = 'Untreated Condition' THEN [User_ID] END)
+   ```
+6. **`[Treatment_Gap_Pct_Calc]`**:
+   ```tableau
+   [Treatment_Gap_Count_Calc] / COUNTD(IF [Condition_Count] > 0 THEN [User_ID] END)
+   ```
+7. **`[Depression_Rate_Calc]`**:
+   ```tableau
+   SUM([Depression_Flag]) / [Total_Students_Calc]
+   ```
+8. **`[Anxiety_Rate_Calc]`**:
+   ```tableau
+   SUM([Anxiety_Flag]) / [Total_Students_Calc]
+   ```
+9. **`[Panic_Rate_Calc]`**:
+   ```tableau
+   SUM([Panic_Attack_Flag]) / [Total_Students_Calc]
+   ```
 
 ---
 
-### 5. Verification Checklist
-- [x] Processed CSV verified without encoding errors (UTF-8).
-- [x] Zero null values across all 23 columns.
-- [x] Data types align seamlessly with Tableau Desktop 2026.1 and Tableau Public.
-- [x] Prepared for immediate import upon authorization to start Epic 3.
+### 4. Visualization Worksheets Notes
+
+- **Worksheet 1 (`Mental Health Risk Distribution`):** Uses a clean vertical bar layout with consistent healthcare color palette (`#38A169`, `#DD6B20`, `#E53E3E`).
+- **Worksheet 2 (`Mental Health Conditions by Gender`):** Dual clustered bars per condition, annotated with exact within-gender prevalence percentages.
+- **Worksheet 3 (`Mental Health Risk Across Age Groups`):** Stacked bar format allowing direct comparison of risk proportions between freshmen/sophomores and seniors.
+- **Worksheet 4 (`Mental Health Risk by Faculty`):** Horizontal orientation to accommodate full faculty names cleanly without truncation.
+- **Worksheet 5 (`Distribution of Mental Health Condition Count`):** Discrete step histogram from 0 to 3 conditions highlighting the 10 triply symptomatic students.
+- **Worksheet 6 (`Student Mental Health Treatment Gap`):** Highlights the acute contrast between the 58 untreated symptomatic students and only 6 treated students.
+- **Worksheet 7 (`Prevalence of Self-Reported Conditions`):** Benchmark view comparing Depression (34.7%), Anxiety (33.7%), and Panic Attack (32.7%).
+- **Worksheet 8 (`CGPA and Mental Health Risk`):** Boxplot with overlaid student jitter showing median and mean GPA midpoints across risk tiers.
+- **Worksheet 9 (`Age and Mental Health Condition Count`):** Bar chart of mean conditions per student age confirming uniform vulnerability across age groups.
+- **Worksheet 10 (`Treatment Seeking Across Mental Health Risk Levels`):** Stacked bar demonstrating that 78.6% of high-risk students never sought specialist consultation.
+
+---
+
+### 5. Dashboard Notes
+
+- **Dashboard 1: `Student Mental Health Overview`**
+  - **Structure:** 3-tier hierarchy (Top: BAN KPI cards; Middle: Risk & Demographics; Bottom: Academics & Care Gap).
+  - **Filters:** Interactive dropdowns for `Gender`, `Age_Group`, `Faculty`, and `Mental_Health_Risk` configured for cross-sheet filtering.
+  - **Dimensions:** 1920 &times; 1080 responsive canvas.
+- **Dashboard 2: `Mental Health Risk & Treatment Dashboard`**
+  - **Structure:** 2 &times; 2 clinical grid focusing specifically on campus health intervention metrics.
+  - **Target Audience:** Campus counseling staff, medical clinic directors, student welfare committees.
+
+---
+
+### 6. Verification & Rendering Checklist
+- [x] Processed dataset connected without schema mismatch.
+- [x] All 10 worksheets configured with verified calculations.
+- [x] Tableau Workbook XML (`tableau/student_mental_health_visualizations.twb`) generated and validated.
+- [x] 12 high-resolution evidence artifacts (10 worksheets + 2 dashboards) rendered in `evidence/epic_03/`.
+- [x] Zero fabricated fields or external datasets used.
