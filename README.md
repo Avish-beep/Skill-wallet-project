@@ -2,7 +2,7 @@
 
 ## 📌 Project Status
 
-**Current Milestone:** Epic 3 — Data Visualization  
+**Current Milestone:** Epic 3 — Data Visualization (Dashboard Integrity Validated)  
 **Completed Epics:** Epic 1 (Data Collection), Epic 2 (Data Preparation), Epic 3 (Data Visualization)  
 **Upcoming Epics:** Epic 4–8 (Not Started)  
 **Status:** **EPIC 3 COMPLETED**  
@@ -38,7 +38,7 @@ Healthcare / Student Mental Health & Higher Education Analytics
 - **Location:** `data/processed/student_mental_health_processed.csv`
 - **Dimensions:** 101 rows &times; 23 analytical columns
 - **Completeness:** 100% complete (0 null values, 0 duplicate rows)
-- **Transformations Executed:** Cleaned headers, median age imputation (19.0), 12 engineered features including `User_ID`, `Faculty`, `CGPA_Midpoint`, binary condition flags, comorbidity index (`Condition_Count`), clinical risk tier (`Mental_Health_Risk`), and `Treatment_Gap`.
+- **Data Integrity Rule:** Constructed strictly from verified survey columns. Generic example metrics from placeholder task templates (such as *Average Mental Score*, *Sleep Duration*, *Attendance Rate*, and *Heart Rate Variability*) do not exist in our data and were strictly excluded.
 
 ---
 
@@ -48,7 +48,7 @@ Healthcare / Student Mental Health & Higher Education Analytics
 | :---: | :--- | :---: | :---: | :---: | :--- |
 | **Epic 1** | **Data Collection & Extraction from Database** | Medium | 5 hours | **COMPLETED** | Ingested baseline survey data, validated schema, audited dictionary. |
 | **Epic 2** | **Data Preparation** | Medium | 6 hours | **COMPLETED** | ETL pipeline executed, 1 missing value imputed, 12 features engineered. |
-| **Epic 3** | **Data Visualization** | High | 8 hours | **COMPLETED** | 10 unique Tableau worksheets + 2 dashboards created and validated. |
+| **Epic 3** | **Data Visualization** | High | 8 hours | **COMPLETED** | 10 unique Tableau worksheets + 2 dashboards built in Tableau (.twb), 12 evidence PNGs rendered, all metrics reconciled to real data. |
 | **Epic 4** | Dashboard | High | 6 hours | *Not Started* | Scheduled for next phase |
 | **Epic 5** | Story | Medium | 4 hours | *Not Started* | Scheduled for next phase |
 | **Epic 6** | Performance Testing | Medium | 4 hours | *Not Started* | Scheduled for next phase |
@@ -60,20 +60,20 @@ Healthcare / Student Mental Health & Higher Education Analytics
 ## 📊 Tableau Visualization Work (Epic 3 Deliverables)
 
 ### 1. Unique Worksheets Created (10 Worksheets)
-1. **Mental Health Risk Distribution Among Students:** Discrete bar chart categorizing respondents into Low (36.6%), Moderate (35.6%), and High Risk (27.7%).
-2. **Mental Health Conditions by Gender:** Clustered bar chart comparing depression, anxiety, and panic attack incidence between female (N=75) and male (N=26) cohorts.
+1. **Distribution of Mental Health Risk Levels Among Students:** Discrete bar chart categorizing respondents into Low (36.6%), Moderate (35.6%), and High Risk (27.7%).
+2. **Self-Reported Mental Health Conditions by Gender:** Clustered bar chart comparing depression, anxiety, and panic attack incidence between female (N=75) and male (N=26) cohorts.
 3. **Mental Health Risk Across Age Groups:** Stacked column chart analyzing comorbidity burdens across underclassmen (18–20) and upperclassmen (21–24).
-4. **Mental Health Risk by Faculty:** Horizontal stacked bar chart identifying distress concentrations across 7 academic disciplines (highest in Computing & IT and Engineering).
+4. **Mental Health Risk by Faculty:** Horizontal stacked bar chart identifying distress concentrations across 7 academic disciplines.
 5. **Distribution of Mental Health Condition Count:** Discrete histogram tracking comorbidity load (0 to 3 concurrent conditions).
 6. **Student Mental Health Treatment Gap:** Categorical bar chart quantifying the 90.6% deficit in specialist consultation among symptomatic students.
 7. **Prevalence of Self-Reported Conditions:** Benchmark bar chart comparing Depression (34.7%), Anxiety (33.7%), and Panic Attack (32.7%) rates.
-8. **CGPA and Mental Health Risk:** Boxplot with overlaid student stripplot showing high academic performance (mean CGPA midpoint 3.45) among high-risk students.
+8. **CGPA Midpoint and Mental Health Risk:** Boxplot with overlaid student stripplot showing high academic performance (mean CGPA midpoint 3.45) among high-risk students.
 9. **Age and Mental Health Condition Count:** Mean condition count bar chart confirming that vulnerability spans all undergraduate ages (18–24).
 10. **Treatment Seeking Across Mental Health Risk Levels:** Stacked bar chart demonstrating that 78.6% of high-risk students have never consulted a clinical specialist.
 
-### 2. Dashboards Created (2 Dashboards)
-- **`Student Mental Health Overview`:** Executive 3-tier layout combining 3 BAN KPI cards with 6 analytical views and global interactive filters (`Gender`, `Age_Group`, `Faculty`, `Mental_Health_Risk`).
-- **`Mental Health Risk & Treatment Dashboard`:** Clinical 2 &times; 2 grid focused specifically on the campus mental health care gap and healthcare-seeking barriers.
+### 2. Dashboards Rebuilt With Real Project Fields (2 Dashboards)
+- **`Student Mental Health Overview`:** Executive 3-tier layout combining 4 validated KPI cards (Total Students: 101, High Risk: 28, Moderate Risk: 36, Treatment Gap: 58) with 6 analytical views (Panels A–F) and global interactive filters (`Gender`, `Age_Group`, `Faculty`, `Mental_Health_Risk`).
+- **`Mental Health Risk & Treatment Dashboard`:** Clinical 2 &times; 3 grid focused specifically on the campus mental health care gap, specialist consultation rates, and comorbidity severity.
 
 ### 3. Tableau Workbook File
 - **Path:** `tableau/student_mental_health_visualizations.twb`
@@ -123,12 +123,16 @@ C:\Skillwallet\
 ├── scripts/
 │   ├── generate_visualizations.py          # High-resolution visualization generator
 │   ├── generate_tableau_twb.py             # Tableau Workbook XML builder
+│   ├── verify_epic_03.py                   # Automated Epic 3 integrity verification script
 │   ├── audit_visualization_metrics.py      # Statistical metric verification script
 │   ├── prepare_dataset.py                  # Reproducible data preparation pipeline
 │   ├── inspect_dataset.py                  # Schema inspection and validation tool
 │   └── verify_environment.py               # Virtual environment check
 ├── tableau/
 │   ├── student_mental_health_visualizations.twb # Tableau Workbook file
+│   ├── dashboard_design.md                 # Dashboard architecture and layout documentation
+│   ├── calculated_fields.md                # Verified calculated fields documentation
+│   ├── tableau_setup.md                    # Tableau Desktop setup and publishing guide
 │   └── data_source_notes.md                # Data roles, calculated fields, and dashboard specifications
 ├── flask_app/                              # Web application architecture (Epic 7)
 ├── .gitignore                              # Git exclusion rules
@@ -153,6 +157,9 @@ cd C:\Skillwallet
 # Re-build Tableau Workbook XML
 & "C:\Skillwallet\venv\Scripts\python.exe" "scripts\generate_tableau_twb.py"
 
+# Run automated integrity and reconciliation verification
+& "C:\Skillwallet\venv\Scripts\python.exe" "scripts\verify_epic_03.py"
+
 # Open in Tableau Desktop 2026.1
 & "C:\Program Files\Tableau\Tableau 2026.1\bin\tableau.exe" "C:\Skillwallet\tableau\student_mental_health_visualizations.twb"
 ```
@@ -162,4 +169,4 @@ cd C:\Skillwallet
 ## ⚠️ Epidemiological Disclaimers & Data Limitations
 - **Self-Reported Data:** Visualizations represent student responses from a self-administered questionnaire, not clinical DSM-5 diagnoses.
 - **Non-Causal Observations:** Academic indicators (e.g. CGPA midpoint) and mental health conditions are evaluated correlationally without causal claims.
-- **Sample Scope:** Observations are based on N=101 university students. Subgroup breakdowns across smaller faculties are descriptive.
+- **Cohort Scope:** Observations are based on N=101 university students. Subgroup breakdowns across smaller faculties are descriptive.

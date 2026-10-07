@@ -4,24 +4,38 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 
 def verify():
-    print("=== RUNNING EPIC 3 VALIDATION CHECKS ===")
+    print("=== RUNNING EPIC 3 DATA INTEGRITY & VALIDATION CHECKS ===")
     
     # 1. Raw file hash
-    with open("data/raw/Student_Mental_health.csv", "rb") as f:
+    raw_path = "data/raw/Student_Mental_health.csv"
+    with open(raw_path, "rb") as f:
         raw_hash = hashlib.sha256(f.read()).hexdigest()
     assert raw_hash == "c0d1300dd5225b426f91ee75c81e5068efdadf528416628994a5a6e013063f0a", "Raw file hash modified!"
-    print("[PASS] Raw file integrity verified.")
+    print("[PASS] Raw file integrity verified (Immutable SHA-256).")
 
     # 2. Processed dataset
-    df = pd.read_csv("data/processed/student_mental_health_processed.csv")
+    proc_path = "data/processed/student_mental_health_processed.csv"
+    df = pd.read_csv(proc_path)
     assert df.shape == (101, 23), f"Invalid processed shape: {df.shape}"
     assert df.isnull().sum().sum() == 0, "Processed dataset contains nulls!"
     assert df["User_ID"].nunique() == 101, "User_ID not distinct!"
-    print("[PASS] Processed dataset (101 rows, 23 cols, 0 nulls) verified.")
+    print("[PASS] Processed dataset (101 rows, 23 cols, 0 nulls, 0 duplicates) verified.")
 
-    # 3. Tableau Workbook XML
+    # 3. Tableau Workbook XML Integrity & Invalid Field Check
     twb_path = "tableau/student_mental_health_visualizations.twb"
     assert os.path.exists(twb_path), "TWB file missing!"
+    
+    with open(twb_path, "r", encoding="utf-8") as f:
+        twb_text = f.read()
+    
+    invalid_keywords = [
+        "Average Mental Score", "Sleep Duration", "Attendance Rate", 
+        "Heart Rate", "Study Hours", "Average Depression Level"
+    ]
+    for kw in invalid_keywords:
+        assert kw.lower() not in twb_text.lower(), f"Detected invalid example field '{kw}' in Tableau workbook XML!"
+    print("[PASS] Verified ZERO invalid example fields in Tableau XML.")
+
     tree = ET.parse(twb_path)
     root = tree.getroot()
     assert root.tag == "workbook", "Invalid TWB XML root!"
@@ -41,7 +55,7 @@ def verify():
     for png in expected_pngs:
         p = os.path.join("evidence/epic_03", png)
         assert os.path.exists(p) and os.path.getsize(p) > 10000, f"Missing or empty evidence PNG: {p}"
-    print(f"[PASS] All {len(expected_pngs)} evidence image artifacts verified.")
+    print(f"[PASS] All {len(expected_pngs)} evidence image artifacts verified on disk.")
 
     # 5. Documentation files
     expected_docs = [
@@ -49,6 +63,8 @@ def verify():
         "documentation/visualization_dictionary.md",
         "documentation/project_progress.md",
         "tableau/data_source_notes.md",
+        "tableau/dashboard_design.md",
+        "tableau/calculated_fields.md",
         "evidence/epic_03/README.md",
         "README.md",
         "CHANGELOG.md"
@@ -64,7 +80,7 @@ def verify():
         assert f"Epic {epic_num}" in prog and "Not Started" in prog, f"Future Epic {epic_num} not marked Not Started!"
     print("[PASS] Scope guard verified: Epics 4-8 strictly marked Not Started.")
 
-    print("\nALL EPIC 3 VERIFICATION CHECKS PASSED SUCCESSFULLY!")
+    print("\nALL EPIC 3 DATA INTEGRITY CHECKS PASSED SUCCESSFULLY!")
 
 if __name__ == "__main__":
     verify()

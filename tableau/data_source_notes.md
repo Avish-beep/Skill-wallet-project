@@ -3,13 +3,16 @@
 
 This document provides complete technical specifications for the Tableau workbook, data connections, calculated fields, individual visualization worksheets, and interactive dashboards created for **Epic 3: Data Visualization**.
 
+**Validated Source Dataset:** `data/processed/student_mental_health_processed.csv` (101 Records, 23 Columns)  
+**Strict Integrity Rule:** All metrics are derived exclusively from actual survey columns. Generic example metrics (Average Mental Score, Sleep Duration, Attendance Rate, Heart Rate Variability) do not exist in our dataset and are strictly excluded.
+
 ---
 
 ### 1. Data Connection & Source Specifications
 
 - **Tableau Workbook File:** `tableau/student_mental_health_visualizations.twb`
 - **Primary Data Source Path:** `data/processed/student_mental_health_processed.csv`
-- **Fallback / Raw Path (Immutable):** `data/raw/Student_Mental_health.csv`
+- **Fallback / Raw Path (Immutable):** `data/raw/Student_Mental_health.csv` (SHA-256: `c0d1300dd5225b426f91ee75c81e5068efdadf528416628994a5a6e013063f0a`)
 - **Connection Type:** In-memory Text File connection (UTF-8 encoded CSV)
 - **Record Count:** 101 records (100% complete, 0 missing values, 0 duplicates)
 - **Field Count:** 23 columns (11 standardized raw features + 1 lineage column + 11 engineered features)
@@ -17,7 +20,7 @@ This document provides complete technical specifications for the Tableau workboo
 
 ---
 
-### 2. Fields Used Across Visualizations
+### 2. Validated Fields Used Across Visualizations
 
 | Field Name | Data Type | Tableau Role | Used In Worksheets | Analytical Function |
 |---|---|---|---|---|
@@ -83,36 +86,30 @@ The following calculated fields are embedded within `tableau/student_mental_heal
 
 ---
 
-### 4. Visualization Worksheets Notes
-
-- **Worksheet 1 (`Mental Health Risk Distribution`):** Uses a clean vertical bar layout with consistent healthcare color palette (`#38A169`, `#DD6B20`, `#E53E3E`).
-- **Worksheet 2 (`Mental Health Conditions by Gender`):** Dual clustered bars per condition, annotated with exact within-gender prevalence percentages.
-- **Worksheet 3 (`Mental Health Risk Across Age Groups`):** Stacked bar format allowing direct comparison of risk proportions between freshmen/sophomores and seniors.
-- **Worksheet 4 (`Mental Health Risk by Faculty`):** Horizontal orientation to accommodate full faculty names cleanly without truncation.
-- **Worksheet 5 (`Distribution of Mental Health Condition Count`):** Discrete step histogram from 0 to 3 conditions highlighting the 10 triply symptomatic students.
-- **Worksheet 6 (`Student Mental Health Treatment Gap`):** Highlights the acute contrast between the 58 untreated symptomatic students and only 6 treated students.
-- **Worksheet 7 (`Prevalence of Self-Reported Conditions`):** Benchmark view comparing Depression (34.7%), Anxiety (33.7%), and Panic Attack (32.7%).
-- **Worksheet 8 (`CGPA and Mental Health Risk`):** Boxplot with overlaid student jitter showing median and mean GPA midpoints across risk tiers.
-- **Worksheet 9 (`Age and Mental Health Condition Count`):** Bar chart of mean conditions per student age confirming uniform vulnerability across age groups.
-- **Worksheet 10 (`Treatment Seeking Across Mental Health Risk Levels`):** Stacked bar demonstrating that 78.6% of high-risk students never sought specialist consultation.
-
----
-
-### 5. Dashboard Notes
+### 4. Dashboards Architecture (Rebuilt & Validated)
 
 - **Dashboard 1: `Student Mental Health Overview`**
-  - **Structure:** 3-tier hierarchy (Top: BAN KPI cards; Middle: Risk & Demographics; Bottom: Academics & Care Gap).
-  - **Filters:** Interactive dropdowns for `Gender`, `Age_Group`, `Faculty`, and `Mental_Health_Risk` configured for cross-sheet filtering.
+  - **4 Top KPI Cards:** Total Students (101), High Risk Students (28 / 27.7%), Moderate Risk Students (36 / 35.6%), Treatment Gap Students (58 / 90.6% symptomatic).
+  - **6 Visual Panels (2 × 3 Grid):**
+    - Panel A: *Distribution of Mental Health Risk Levels Among Students*
+    - Panel B: *Self-Reported Mental Health Conditions by Gender*
+    - Panel C: *Mental Health Risk Across Age Groups*
+    - Panel D: *Mental Health Risk by Faculty*
+    - Panel E: *Student Mental Health Treatment Gap*
+    - Panel F: *Distribution of Mental Health Condition Count*
+  - **Filters:** Interactive dropdowns for `Gender`, `Age_Group`, `Faculty`, and `Mental_Health_Risk`.
   - **Dimensions:** 1920 &times; 1080 responsive canvas.
+
 - **Dashboard 2: `Mental Health Risk & Treatment Dashboard`**
-  - **Structure:** 2 &times; 2 clinical grid focusing specifically on campus health intervention metrics.
-  - **Target Audience:** Campus counseling staff, medical clinic directors, student welfare committees.
+  - **6 Clinical Panels:** Focused specifically on specialist consultation rates, treatment gap status, comorbidity severity, and departmental risk distribution.
+  - **Target Audience:** Campus counseling staff, medical clinic directors, student welfare deans.
 
 ---
 
-### 6. Verification & Rendering Checklist
-- [x] Processed dataset connected without schema mismatch.
+### 5. Verification Checklist
+- [x] Processed dataset connected without schema mismatch (101 rows, 23 columns).
+- [x] Zero invalid example fields present in workbook, XML, or visualizations.
 - [x] All 10 worksheets configured with verified calculations.
 - [x] Tableau Workbook XML (`tableau/student_mental_health_visualizations.twb`) generated and validated.
 - [x] 12 high-resolution evidence artifacts (10 worksheets + 2 dashboards) rendered in `evidence/epic_03/`.
-- [x] Zero fabricated fields or external datasets used.
+- [x] Full data reconciliation verified (101 total student records).

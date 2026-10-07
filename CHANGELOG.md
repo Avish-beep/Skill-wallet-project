@@ -4,34 +4,25 @@ All notable technical updates to the *Analysing Mental Health in Student Ecosyst
 
 ---
 
-## [Epic 3] Data Visualization
+## [Epic 3] Data Visualization (Integrity Validated & Rebuilt)
 **Date:** October 07, 2026  
 **Status:** Completed  
 
-### Activities & Deliverables:
-- **Tableau Workbook Construction (`tableau/student_mental_health_visualizations.twb`):** Authored native Tableau Workbook XML connecting to `data/processed/student_mental_health_processed.csv`, defining metadata, field roles, and calculated fields.
-- **10 Unique Worksheets Created:**
-  1. *Mental Health Risk Distribution Among Students* (Low: 36.6%, Moderate: 35.6%, High: 27.7%).
-  2. *Mental Health Conditions by Gender* (Clustered bars showing within-gender prevalence for depression, anxiety, panic attacks).
-  3. *Mental Health Risk Across Age Groups* (Stacked column chart comparing 18–20 and 21–24 cohorts).
-  4. *Mental Health Risk by Faculty* (Horizontal stacked bar chart across 7 academic faculties).
-  5. *Distribution of Mental Health Condition Count* (Discrete histogram of comorbidity count from 0 to 3).
-  6. *Student Mental Health Treatment Gap* (Categorical bar chart showing 90.6% untreated symptomatic students).
-  7. *Prevalence of Self-Reported Mental Health Conditions* (Benchmark comparison: Depression 34.7%, Anxiety 33.7%, Panic Attacks 32.7%).
-  8. *CGPA and Mental Health Risk* (Boxplot and stripplot showing high academic standing among high-risk students).
-  9. *Age and Mental Health Condition Count* (Bar chart of average conditions across ages 18–24).
-  10. *Treatment Seeking Across Mental Health Risk Levels* (Stacked bar demonstrating that 78.6% of high-risk students never sought specialist consultation).
-- **2 Professional Dashboards Created:**
-  1. *Student Mental Health Overview* (Executive 3-tier layout with 3 BAN KPI cards and 6 analytical charts).
-  2. *Mental Health Risk & Treatment Dashboard* (Clinical 2 &times; 2 grid focused on campus health center interventions).
-- **Calculated Fields Implemented:** Authored 9 Tableau calculations for total student count, risk category percentages, prevalence rates, and treatment gap percentages.
-- **Rendering Pipeline & Evidence Generation (`scripts/generate_visualizations.py`):** Generated 12 high-resolution 300 DPI PNG artifacts in `evidence/epic_03/`.
-- **Comprehensive Documentation:**
-  - `documentation/visualization_report.md`: Full 14-section technical visualization report.
-  - `documentation/visualization_dictionary.md`: Matrix mapping chart types, dimensions, measures, purposes, and insights.
-  - `tableau/data_source_notes.md`: Updated with worksheet notes, calculated field definitions, and dashboard architectures.
-  - `evidence/epic_03/README.md`: Evidence manifest documenting deliverables and validation.
-- **Validation & Limitations:** Reconciled respondent counts (N=101) across all views. Highlighted that data reflects self-reported student survey responses rather than clinical diagnoses. Tableau Public publication marked as pending manual authentication.
+### Dashboard Data Integrity Correction:
+- **Exclusion of Invalid Example Fields:** Conducted a comprehensive audit and removed all references to generic placeholder metrics found in the task template (such as *Average Mental Score*, *Avg. Sleep Duration Hours*, *Avg. Depression Level*, *Avg. Attendance Rate*, *Stress Level*, *Heart Rate Variability*, and *Study Hours*).
+- **Rebuilt Dashboard 1 (`Student Mental Health Overview`):**
+  - Implemented 4 validated KPI cards strictly computed from real columns: Total Students (101), High Risk Students (28 / 27.7%), Moderate Risk Students (36 / 35.6%), and Treatment Gap Students (58 / 90.6% of symptomatic cohort).
+  - Configured 6 analytical panels in a balanced 2 × 3 visual grid (Risk Distribution, Conditions by Gender, Risk by Age Group, Faculty Risk, Treatment Gap, Condition Count).
+- **Rebuilt Dashboard 2 (`Mental Health Risk & Treatment Dashboard`):**
+  - Constructed dedicated clinical care dashboard with 6 panels covering specialist treatment seeking across risk tiers, treatment gap distribution, comorbidity histogram, gender disparity, risk distribution, and faculty risk.
+- **Evidence Screenshots Regenerated:** Regenerated all 12 high-resolution 300 DPI PNG artifacts in `evidence/epic_03/` from the real dataset.
+- **Tableau XML Re-authored:** Updated `tableau/student_mental_health_visualizations.twb` ensuring full schema alignment with `data/processed/student_mental_health_processed.csv`.
+- **Automated Validation:** Updated and passed `scripts/verify_epic_03.py` confirming zero invalid keywords in XML, dataset reconciliation (101 rows), and future epic boundaries.
+
+### Initial Activities & Deliverables:
+- **Tableau Workbook Construction (`tableau/student_mental_health_visualizations.twb`):** Authored native Tableau Workbook XML connecting to `data/processed/student_mental_health_processed.csv`.
+- **10 Unique Worksheets Created:** Documented and verified across all demographic, clinical, and academic dimensions.
+- **Comprehensive Documentation:** Created `documentation/visualization_report.md`, `documentation/visualization_dictionary.md`, and updated `tableau/data_source_notes.md`.
 
 ---
 

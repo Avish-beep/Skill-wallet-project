@@ -8,6 +8,7 @@ def generate_twb():
 <!-- Tableau Desktop 2026.1 / Tableau Public Workbook                        -->
 <!-- Project: Analysing Mental Health in Student Ecosystem                   -->
 <!-- Epic 3: Data Visualization                                              -->
+<!-- Validated Source: student_mental_health_processed.csv (N=101)           -->
 <!-- ====================================================================== -->
 
 <workbook version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
@@ -98,7 +99,8 @@ def generate_twb():
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
-      <!-- Calculated Fields -->
+      
+      <!-- Calculated Fields (Strictly Real Fields, No Synthetics) -->
       <column caption='Total Students' datatype='integer' name='[Total_Students_Calc]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='COUNTD([User_ID])' />
       </column>
@@ -441,29 +443,34 @@ def generate_twb():
   </worksheets>
 
   <dashboards>
-    <!-- DASHBOARD 1 -->
+    <!-- DASHBOARD 1: Student Mental Health Overview -->
     <dashboard name='Student Mental Health Overview'>
       <style />
       <size maxheight='1080' maxwidth='1920' minheight='720' minwidth='1280' type='range' />
       <zones>
         <zone h='100000' id='1' type-v2='layout-basic' w='100000' x='0' y='0'>
-          <zone h='98000' id='2' name='Mental Health Risk Distribution' w='32000' x='1000' y='1000' />
-          <zone h='98000' id='3' name='Mental Health Conditions by Gender' w='32000' x='34000' y='1000' />
-          <zone h='98000' id='4' name='Mental Health Risk Across Age Groups' w='32000' x='67000' y='1000' />
+          <zone h='48000' id='2' name='Mental Health Risk Distribution' w='32000' x='1000' y='1000' />
+          <zone h='48000' id='3' name='Mental Health Conditions by Gender' w='32000' x='34000' y='1000' />
+          <zone h='48000' id='4' name='Mental Health Risk Across Age Groups' w='32000' x='67000' y='1000' />
+          <zone h='48000' id='5' name='Mental Health Risk by Faculty' w='32000' x='1000' y='51000' />
+          <zone h='48000' id='6' name='Student Mental Health Treatment Gap' w='32000' x='34000' y='51000' />
+          <zone h='48000' id='7' name='Distribution of Mental Health Condition Count' w='32000' x='67000' y='51000' />
         </zone>
       </zones>
     </dashboard>
 
-    <!-- DASHBOARD 2 -->
+    <!-- DASHBOARD 2: Mental Health Risk & Treatment Dashboard -->
     <dashboard name='Mental Health Risk &amp; Treatment Dashboard'>
       <style />
       <size maxheight='1080' maxwidth='1920' minheight='720' minwidth='1280' type='range' />
       <zones>
         <zone h='100000' id='1' type-v2='layout-basic' w='100000' x='0' y='0'>
-          <zone h='48000' id='2' name='Student Mental Health Treatment Gap' w='48000' x='1000' y='1000' />
-          <zone h='48000' id='3' name='Treatment Seeking Across Mental Health Risk Levels' w='48000' x='51000' y='1000' />
-          <zone h='48000' id='4' name='Distribution of Mental Health Condition Count' w='48000' x='1000' y='51000' />
-          <zone h='48000' id='5' name='Mental Health Risk by Faculty' w='48000' x='51000' y='51000' />
+          <zone h='48000' id='2' name='Treatment Seeking Across Mental Health Risk Levels' w='32000' x='1000' y='1000' />
+          <zone h='48000' id='3' name='Student Mental Health Treatment Gap' w='32000' x='34000' y='1000' />
+          <zone h='48000' id='4' name='Distribution of Mental Health Condition Count' w='32000' x='67000' y='1000' />
+          <zone h='48000' id='5' name='Mental Health Conditions by Gender' w='32000' x='1000' y='51000' />
+          <zone h='48000' id='6' name='Mental Health Risk Distribution' w='32000' x='34000' y='51000' />
+          <zone h='48000' id='7' name='Mental Health Risk by Faculty' w='32000' x='67000' y='51000' />
         </zone>
       </zones>
     </dashboard>
