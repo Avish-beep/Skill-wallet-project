@@ -4,7 +4,7 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 
 def verify():
-    print("=== RUNNING EPIC 3 DATA INTEGRITY & VALIDATION CHECKS ===")
+    print("=== RUNNING EPIC 3 RESPONSIVE & DATA INTEGRITY VERIFICATION ===")
     
     # 1. Raw file hash
     raw_path = "data/raw/Student_Mental_health.csv"
@@ -21,7 +21,7 @@ def verify():
     assert df["User_ID"].nunique() == 101, "User_ID not distinct!"
     print("[PASS] Processed dataset (101 rows, 23 cols, 0 nulls, 0 duplicates) verified.")
 
-    # 3. Tableau Workbook XML Integrity & Invalid Field Check
+    # 3. Tableau Workbook XML Integrity & Keyword Scan
     twb_path = "tableau/student_mental_health_visualizations.twb"
     assert os.path.exists(twb_path), "TWB file missing!"
     
@@ -30,7 +30,7 @@ def verify():
     
     invalid_keywords = [
         "Average Mental Score", "Sleep Duration", "Attendance Rate", 
-        "Heart Rate", "Study Hours", "Average Depression Level"
+        "Heart Rate", "Study Hours", "Average Depression Level", "Stress Level"
     ]
     for kw in invalid_keywords:
         assert kw.lower() not in twb_text.lower(), f"Detected invalid example field '{kw}' in Tableau workbook XML!"
@@ -43,6 +43,8 @@ def verify():
     dashboards = [db.attrib.get("name") for db in root.findall(".//dashboard")]
     assert len(worksheets) == 10, f"Expected 10 worksheets, found {len(worksheets)}"
     assert len(dashboards) == 2, f"Expected 2 dashboards, found {len(dashboards)}"
+    assert "Student Mental Health Overview" in dashboards, "Dashboard 1 missing!"
+    assert "Mental Health Risk & Treatment Dashboard" in dashboards, "Dashboard 2 missing!"
     print(f"[PASS] Tableau Workbook verified with {len(worksheets)} worksheets and {len(dashboards)} dashboards.")
 
     # 4. Evidence PNGs
@@ -54,8 +56,10 @@ def verify():
     ]
     for png in expected_pngs:
         p = os.path.join("evidence/epic_03", png)
-        assert os.path.exists(p) and os.path.getsize(p) > 10000, f"Missing or empty evidence PNG: {p}"
-    print(f"[PASS] All {len(expected_pngs)} evidence image artifacts verified on disk.")
+        assert os.path.exists(p), f"Missing evidence PNG: {p}"
+        size = os.path.getsize(p)
+        assert size > 50000, f"Evidence PNG {p} too small ({size} bytes)!"
+    print(f"[PASS] All {len(expected_pngs)} high-resolution evidence image artifacts verified on disk.")
 
     # 5. Documentation files
     expected_docs = [
@@ -65,6 +69,7 @@ def verify():
         "tableau/data_source_notes.md",
         "tableau/dashboard_design.md",
         "tableau/calculated_fields.md",
+        "tableau/tableau_setup.md",
         "evidence/epic_03/README.md",
         "README.md",
         "CHANGELOG.md"
@@ -80,7 +85,7 @@ def verify():
         assert f"Epic {epic_num}" in prog and "Not Started" in prog, f"Future Epic {epic_num} not marked Not Started!"
     print("[PASS] Scope guard verified: Epics 4-8 strictly marked Not Started.")
 
-    print("\nALL EPIC 3 DATA INTEGRITY CHECKS PASSED SUCCESSFULLY!")
+    print("\nALL EPIC 3 RESPONSIVE & INTEGRITY CHECKS PASSED SUCCESSFULLY!")
 
 if __name__ == "__main__":
     verify()

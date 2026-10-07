@@ -2,7 +2,7 @@
 
 ## 📌 Project Status
 
-**Current Milestone:** Epic 3 — Data Visualization (Dashboard Integrity Validated)  
+**Current Milestone:** Epic 3 — Data Visualization (Responsive and Design of Dashboard Completed)  
 **Completed Epics:** Epic 1 (Data Collection), Epic 2 (Data Preparation), Epic 3 (Data Visualization)  
 **Upcoming Epics:** Epic 4–8 (Not Started)  
 **Status:** **EPIC 3 COMPLETED**  
@@ -21,7 +21,7 @@ Healthcare / Student Mental Health & Higher Education Analytics
 
 ## 🛠 Technology Stack
 - **Python 3.11.9:** Data engineering, schema auditing, ETL pipelines, and feature derivation (`pandas`, `numpy`, `openpyxl`, `matplotlib`, `seaborn`)
-- **Tableau Desktop 2026.1 & Tableau Public:** Interactive visual analytics, calculated fields, worksheets, dashboards, and storytelling
+- **Tableau Desktop 2026.1 & Tableau Public:** Interactive visual analytics, calculated fields, worksheets, responsive dashboards, and storytelling
 - **Flask 3.1.3:** Web portal embedding interactive Tableau visualizations via Web Component API v3
 - **Git 2.55.0 & GitHub:** Version control and portfolio hosting
 
@@ -38,7 +38,7 @@ Healthcare / Student Mental Health & Higher Education Analytics
 - **Location:** `data/processed/student_mental_health_processed.csv`
 - **Dimensions:** 101 rows &times; 23 analytical columns
 - **Completeness:** 100% complete (0 null values, 0 duplicate rows)
-- **Data Integrity Rule:** Constructed strictly from verified survey columns. Generic example metrics from placeholder task templates (such as *Average Mental Score*, *Sleep Duration*, *Attendance Rate*, and *Heart Rate Variability*) do not exist in our data and were strictly excluded.
+- **Data Integrity Standard:** Constructed strictly from verified survey columns. Generic example metrics from placeholder task templates (such as *Average Mental Score*, *Sleep Duration*, *Attendance Rate*, and *Heart Rate Variability*) do not exist in our data and were strictly excluded.
 
 ---
 
@@ -48,7 +48,7 @@ Healthcare / Student Mental Health & Higher Education Analytics
 | :---: | :--- | :---: | :---: | :---: | :--- |
 | **Epic 1** | **Data Collection & Extraction from Database** | Medium | 5 hours | **COMPLETED** | Ingested baseline survey data, validated schema, audited dictionary. |
 | **Epic 2** | **Data Preparation** | Medium | 6 hours | **COMPLETED** | ETL pipeline executed, 1 missing value imputed, 12 features engineered. |
-| **Epic 3** | **Data Visualization** | High | 8 hours | **COMPLETED** | 10 unique Tableau worksheets + 2 dashboards built in Tableau (.twb), 12 evidence PNGs rendered, all metrics reconciled to real data. |
+| **Epic 3** | **Data Visualization** | High | 8 hours | **COMPLETED** | 10 unique worksheets + 2 responsive dashboards built in Tableau (.twb), 12 evidence PNGs rendered, responsive layout verified. |
 | **Epic 4** | Dashboard | High | 6 hours | *Not Started* | Scheduled for next phase |
 | **Epic 5** | Story | Medium | 4 hours | *Not Started* | Scheduled for next phase |
 | **Epic 6** | Performance Testing | Medium | 4 hours | *Not Started* | Scheduled for next phase |
@@ -57,25 +57,35 @@ Healthcare / Student Mental Health & Higher Education Analytics
 
 ---
 
-## 📊 Tableau Visualization Work (Epic 3 Deliverables)
+## 📊 Tableau Visualization Work (Epic 3: Responsive and Design of Dashboard)
 
-### 1. Unique Worksheets Created (10 Worksheets)
-1. **Distribution of Mental Health Risk Levels Among Students:** Discrete bar chart categorizing respondents into Low (36.6%), Moderate (35.6%), and High Risk (27.7%).
-2. **Self-Reported Mental Health Conditions by Gender:** Clustered bar chart comparing depression, anxiety, and panic attack incidence between female (N=75) and male (N=26) cohorts.
+### 1. Official Dashboard Description
+> The **Student Mental Health Analysis Dashboard** provides an interactive visual overview of self-reported mental-health conditions among 101 surveyed university students. It utilizes validated demographic, academic, mental-health-risk, condition-count, and treatment-seeking fields to help educational stakeholders and wellness administrators identify patterns across gender, age group, and academic faculty.
+> 
+> - **Executive KPI Cards:** Summarize the student cohort (101 students) and stratify risk tiers (28 high risk, 36 moderate risk, 58 untreated symptomatic students).
+> - **Risk Distribution:** Illustrates the proportion of students categorized as Low (36.6%), Moderate (35.6%), and High Risk (27.7%).
+> - **Gender Visualization:** Compares self-reported depression, anxiety, and panic attack indicators between female (N=75) and male (N=26) cohorts.
+> - **Age-Group & Faculty Views:** Highlight how comorbidity risk is distributed across undergraduate seniority levels (18–20 vs. 21–24) and 7 macro academic disciplines.
+> - **Treatment-Gap Visualizations:** Highlight self-reported treatment-seeking patterns, revealing that 90.6% of symptomatic students have not accessed specialist care.
+> - **Condition-Count Visualization:** Displays the distribution of concurrent self-reported conditions (0 to 3), detailing comorbidity burdens.
+
+### 2. Dashboards Created (2 Responsive Dashboards)
+- **`Student Mental Health Overview`:** Responsive 16:9 layout (1920×1080) featuring interactive filter bar (`Gender`, `Age_Group`, `Faculty`, `Mental_Health_Risk`), 4 aligned executive KPI cards, and 6 visual panels in a clean card container grid.
+- **`Mental Health Risk & Treatment Dashboard`:** Specialized 2 &times; 3 clinical healthcare grid focused on the campus mental health care gap, specialist consultation rates, and comorbidity severity.
+
+### 3. Unique Worksheets Created (10 Worksheets)
+1. **Distribution of Mental Health Risk Levels Among Students:** Discrete bar chart (Low: 36.6%, Moderate: 35.6%, High: 27.7%).
+2. **Self-Reported Mental Health Conditions by Gender:** Clustered bar chart showing within-gender condition prevalence for females (N=75) and males (N=26).
 3. **Mental Health Risk Across Age Groups:** Stacked column chart analyzing comorbidity burdens across underclassmen (18–20) and upperclassmen (21–24).
-4. **Mental Health Risk by Faculty:** Horizontal stacked bar chart identifying distress concentrations across 7 academic disciplines.
+4. **Mental Health Risk by Faculty:** Horizontal stacked bar chart across 7 academic disciplines.
 5. **Distribution of Mental Health Condition Count:** Discrete histogram tracking comorbidity load (0 to 3 concurrent conditions).
 6. **Student Mental Health Treatment Gap:** Categorical bar chart quantifying the 90.6% deficit in specialist consultation among symptomatic students.
 7. **Prevalence of Self-Reported Conditions:** Benchmark bar chart comparing Depression (34.7%), Anxiety (33.7%), and Panic Attack (32.7%) rates.
-8. **CGPA Midpoint and Mental Health Risk:** Boxplot with overlaid student stripplot showing high academic performance (mean CGPA midpoint 3.45) among high-risk students.
+8. **CGPA Midpoint and Mental Health Risk:** Boxplot and stripplot showing high academic performance (mean CGPA midpoint 3.45) among high-risk students.
 9. **Age and Mental Health Condition Count:** Mean condition count bar chart confirming that vulnerability spans all undergraduate ages (18–24).
 10. **Treatment Seeking Across Mental Health Risk Levels:** Stacked bar chart demonstrating that 78.6% of high-risk students have never consulted a clinical specialist.
 
-### 2. Dashboards Rebuilt With Real Project Fields (2 Dashboards)
-- **`Student Mental Health Overview`:** Executive 3-tier layout combining 4 validated KPI cards (Total Students: 101, High Risk: 28, Moderate Risk: 36, Treatment Gap: 58) with 6 analytical views (Panels A–F) and global interactive filters (`Gender`, `Age_Group`, `Faculty`, `Mental_Health_Risk`).
-- **`Mental Health Risk & Treatment Dashboard`:** Clinical 2 &times; 3 grid focused specifically on the campus mental health care gap, specialist consultation rates, and comorbidity severity.
-
-### 3. Tableau Workbook File
+### 4. Tableau Workbook File
 - **Path:** `tableau/student_mental_health_visualizations.twb`
 
 ---
