@@ -1,0 +1,35 @@
+Creative Commons Attribution 4.0 International License (CC BY 4.0)
+
+Copyright (c) 2026 Avishkar Padavi
+
+You are free to:
+- Share — copy and redistribute the material in any medium or format for any purpose.
+- Adapt — remix, transform, and build upon the material for any purpose.
+
+Under the following terms:
+- Attribution — You must give appropriate credit, provide a link to the license,
+  and indicate if changes were made. You may do so in any reasonable manner, but
+  not in any way that suggests the licensor endorses you or your use.
+- No additional restrictions — You may not apply legal terms or technological
+  measures that legally restrict others from doing anything the license permits.
+
+Full License Text:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+---
+
+### Scope of the Documentation License
+
+This license applies strictly to the original written prose, analytical reports,
+walkthrough scripts, and narrative documentation authored by Avishkar Padavi in this repository,
+specifically including:
+- Files in the `documentation/` directory
+- Project walkthrough script (`video/script.md`) and transcript (`video/transcript.md`)
+- Methodological guidelines and scrollytelling explanations
+
+### Exclusions:
+This documentation license does NOT apply to:
+1. Software source code and build scripts (licensed under the MIT License in `LICENSE`).
+2. The student survey dataset (governed by terms described in `DATA_LICENSE.md`).
+3. Third-party software libraries, tools, or brand trademarks (see `THIRD_PARTY_NOTICES.md`).
+4. Tableau Public hosted visual components.

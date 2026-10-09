@@ -4,9 +4,39 @@ All notable technical updates to the *Analysing Mental Health in Student Ecosyst
 
 ---
 
+## [Repository Polish] Licensing, Attribution & Governance
+**Date:** October 09, 2026
+**Status:** Completed
+
+### Licensing, Compliance & Governance Additions:
+- **MIT License Added:** Configured standard MIT License in root `LICENSE` for original code and scripts with explicit exclusions for third-party assets and datasets.
+- **Documentation License:** Established Creative Commons Attribution 4.0 International (`LICENSE-DOCS`) for original written materials and video scripts.
+- **Dataset Provenance & Usage Terms:** Created `DATA_LICENSE.md` auditing survey provenance, confidentiality, and non-commercial academic redistribution policy.
+- **Third-Party Attribution:** Authored `THIRD_PARTY_NOTICES.md` inventorying React, Vite, Tailwind CSS, Lucide icons, Pandas, NumPy, Playwright, Inter fonts, and Azure Neural Speech.
+- **Repository Guidelines:** Authored `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1), `SECURITY.md`, and academic citation metadata in `CITATION.cff`.
+- **Root README Modernization:** Rewrote `README.md` to cover all 22 required sections, verified links, and live badges.
+
+---
+
+## [Epic 7-8] Website UI/UX, Natural Video Walkthrough & Live GitHub Pages Deployment
+**Date:** October 09, 2026
+**Status:** Completed
+
+### Website UI/UX & Deployment Achievements:
+- **Responsive Navigation Fix:** Upgraded navigation breakpoint to `lg` and applied `overflow-x-hidden` on outer layout; tested across 4 viewports (1920x1080, 1440x900, 768x1024, 390x844) with **0px horizontal overflow**.
+- **Tableau Section Redesign:** Replaced the empty/black iframe embed with a truthful reconciliation notice and a high-resolution 16:9 canvas preview (`evidence/dashboard_overview.png`).
+- **Live GitHub Pages Deployment:** Verified automated CI/CD workflow (`.github/workflows/deploy-pages.yml`) deploying live at `https://avish-beep.github.io/Skill-wallet-project/` (HTTP 200, 0 console errors).
+
+### Video Narration & Delivery Achievements:
+- **Natural Narration Synthesis:** Regenerated narration using Microsoft Azure Neural Speech (`en-IN-PrabhatNeural` at `-14%` conversational rate, ~130 WPM).
+- **Exact Video Timing:** Produced final Full HD (1920x1080) video at **06:24** (384.45s, 19.4 MB) matching SkillWallet 5–7 min requirement.
+- **Synchronized Captions:** Delivered synchronized WebVTT (`video/captions.vtt`) and SRT (`video/captions.srt`), alongside `video/script.md` and `video/transcript.md`.
+
+---
+
 ## [Epic 3] Data Visualization (Responsive and Design of Dashboard Completed)
-**Date:** October 07, 2026  
-**Status:** Completed  
+**Date:** October 07, 2026
+**Status:** Completed
 
 ### Responsive Dashboard Architecture & Design Finalization:
 - **Completed SkillWallet Task:** *Epic 3 &rarr; Dashboard &rarr; Responsive and Design of Dashboard*.
@@ -24,8 +54,8 @@ All notable technical updates to the *Analysing Mental Health in Student Ecosyst
 ---
 
 ## [Epic 2] Data Preparation
-**Date:** October 06, 2026  
-**Status:** Completed  
+**Date:** October 06, 2026
+**Status:** Completed
 
 ### Activities & Deliverables:
 - **Reproducible Pipeline (`scripts/prepare_dataset.py`):** Developed and executed end-to-end data preparation script converting raw baseline data into an analytical-ready dataset without mutating original files.
@@ -38,8 +68,8 @@ All notable technical updates to the *Analysing Mental Health in Student Ecosyst
 ---
 
 ## [Epic 1] Data Collection & Extraction from Database
-**Date:** October 06, 2026  
-**Status:** Completed  
+**Date:** October 06, 2026
+**Status:** Completed
 
 ### Activities & Deliverables:
 - **Environment Setup:** Virtual environment verified at `C:\Skillwallet\venv` with Python 3.11.9, Pandas, and NumPy.

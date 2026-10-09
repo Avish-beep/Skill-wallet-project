@@ -1,10 +1,10 @@
 # End-to-End Project Development Procedure
 
-**Project Title:** Analysing Mental Health in Student Ecosystem  
-**Domain:** Healthcare Analytics / Higher Education Mental Health  
-**Student Developer:** Avishkar Padavi  
-**Institution:** Indira College of Engineering and Management  
-**Curriculum Module:** Data Analytics with Tableau (SkillWallet)  
+**Project Title:** Analysing Mental Health in Student Ecosystem
+**Domain:** Healthcare Analytics / Higher Education Mental Health
+**Student Developer:** Avishkar Padavi
+**Institution:** Indira College of Engineering and Management
+**Curriculum Module:** Data Analytics with Tableau (SkillWallet)
 
 ---
 
@@ -71,14 +71,23 @@ Constructed in Tableau Desktop (`tableau/student_mental_health_visualizations.tw
 ---
 
 ## 7. Video Presentation Production
-- **Duration:** 06:37 (6 minutes 37 seconds).
-- **Format:** 1080p Full HD @ 40fps MPEG-4 / AAC audio.
-- **Narration:** Indian English Neural Voice (`en-IN-PrabhatNeural`) providing humanized, confident academic narration.
+- **Duration:** 06:24 (6 minutes 24 seconds).
+- **Format:** 1080p Full HD @ 30fps MPEG-4 / AAC audio.
+- **Narration:** Indian English Neural Voice (`en-IN-PrabhatNeural` at `-14%` rate) providing humanized, confident academic narration.
 - **Subtitles & Text:** Synchronized WebVTT (`captions.vtt`), SubRip (`captions.srt`), transcript (`transcript.md`), and scene plan (`scene_plan.md`).
 
 ---
 
-## 8. Verification & Local Setup Commands (Windows)
+## 8. Licensing & Repository Governance
+- **Software Code:** Standard MIT License (`LICENSE`) covering original application code and scripts.
+- **Documentation:** Creative Commons Attribution 4.0 International (`LICENSE-DOCS`) covering written analysis and narrative scripts.
+- **Dataset Audit:** Comprehensive provenance and non-commercial academic usage terms (`DATA_LICENSE.md`).
+- **Attribution Notices:** Third-party dependency notices (`THIRD_PARTY_NOTICES.md`).
+- **Community Standards:** Contributor guidelines (`CONTRIBUTING.md`), Code of Conduct (`CODE_OF_CONDUCT.md`), Security policy (`SECURITY.md`), and Citation metadata (`CITATION.cff`).
+
+---
+
+## 9. Verification & Local Setup Commands (Windows)
 ```powershell
 cd C:\Skillwallet
 

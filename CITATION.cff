@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you cite or use this project, please cite it as below."
+title: "Analysing Mental Health in Student Ecosystem"
+authors:
+  - family-names: "Padavi"
+    given-names: "Avishkar"
+    affiliation: "Indira College of Engineering and Management"
+type: dataset
+abstract: "An empirical healthcare analytics and visual intelligence capstone investigating self-reported psychological distress, academic standing, and clinical care deficits across university students using Python ETL, Tableau Desktop, and a responsive web portfolio."
+repository-code: "https://github.com/Avish-beep/Skill-wallet-project"
+url: "https://avish-beep.github.io/Skill-wallet-project/"
+license: "MIT"
+date-released: "2026-10-09"
+version: "1.0.0"
+keywords:
+  - "student mental health"
+  - "healthcare analytics"
+  - "tableau"
+  - "python etl"
+  - "data visualization"
+  - "comorbidity analysis"
