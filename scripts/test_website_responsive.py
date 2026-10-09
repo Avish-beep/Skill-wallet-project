@@ -8,16 +8,32 @@ def run_responsive_tests():
     evidence_dir = r"C:\Skillwallet\evidence\website_responsive"
     os.makedirs(evidence_dir, exist_ok=True)
     
-    # 1. Start local preview server for website dist
+    # 1. Start local preview server for website dist with custom handler for base path
+    import http.server
+    import threading
+
     dist_dir = r"C:\Skillwallet\website\dist"
-    server_process = subprocess.Popen(
-        [sys.executable, "-m", "http.server", "5173", "--directory", dist_dir],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-    time.sleep(2)
+
+    class PrefixHandler(http.server.SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=dist_dir, **kwargs)
+
+        def translate_path(self, path):
+            if path.startswith("/Skill-wallet-project/"):
+                path = "/" + path[len("/Skill-wallet-project/"):]
+            elif path == "/Skill-wallet-project":
+                path = "/index.html"
+            return super().translate_path(path)
+
+        def log_message(self, format, *args):
+            pass
+
+    server = http.server.HTTPServer(("127.0.0.1", 5173), PrefixHandler)
+    server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+    server_thread.start()
+    time.sleep(1)
     
-    target_url = "http://localhost:5173/Skill-wallet-project/"
+    target_url = "http://127.0.0.1:5173/Skill-wallet-project/"
     
     viewports = [
         {"name": "desktop_1920x1080", "width": 1920, "height": 1080},
@@ -37,8 +53,8 @@ def run_responsive_tests():
                 page = context.new_page()
                 
                 # Navigate
-                page.goto(target_url, wait_until="networkidle", timeout=15000)
-                time.sleep(1)
+                page.goto(target_url, wait_until="domcontentloaded", timeout=15000)
+                page.wait_for_timeout(2000)
                 
                 # Check title
                 title = page.title()
@@ -60,13 +76,13 @@ def run_responsive_tests():
                     "client_width": client_w,
                     "screenshot": ss_path
                 })
-                print(f"Tested {vp['name']}: {status} (scrollWidth: {scroll_w}, clientWidth: {client_w})")
+                print(f"Tested {vp['name']}: {status} (scrollWidth: {scroll_w}, clientWidth: {client_w}, title: '{title}')")
                 context.close()
                 
             browser.close()
     finally:
-        server_process.terminate()
-        server_process.wait()
+        server.shutdown()
+        server.server_close()
         
     print("\n=== RESPONSIVE TEST RESULTS ===")
     for r in results:

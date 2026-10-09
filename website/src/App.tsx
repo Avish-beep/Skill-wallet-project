@@ -85,7 +85,7 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans overflow-x-hidden">
       {/* Top Header / Navigation */}
       <header className="sticky top-0 z-50 bg-slate-900 border-b border-slate-800 text-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -99,7 +99,7 @@ export default function App() {
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <nav className="hidden lg:flex items-center space-x-6 text-sm font-medium">
             <a href="#overview" className="text-slate-300 hover:text-teal-400 transition-colors">Overview</a>
             <a href="#methodology" className="text-slate-300 hover:text-teal-400 transition-colors">Methodology</a>
             <a href="#dashboard" className="text-slate-300 hover:text-teal-400 transition-colors">Tableau Dashboard</a>
@@ -121,7 +121,7 @@ export default function App() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+            className="lg:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -130,7 +130,7 @@ export default function App() {
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2 text-sm">
+          <div className="lg:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2 text-sm">
             <a href="#overview" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-teal-400">Overview</a>
             <a href="#methodology" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-teal-400">Methodology</a>
             <a href="#dashboard" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-300 hover:text-teal-400">Tableau Dashboard</a>
@@ -177,7 +177,7 @@ export default function App() {
               className="inline-flex items-center px-6 py-3 rounded-lg bg-slate-800 text-white border border-slate-700 font-semibold hover:bg-slate-700 transition"
             >
               <Play className="w-5 h-5 mr-2 text-teal-400" aria-hidden="true" />
-              Watch Video Presentation (6:37)
+              Watch Video Presentation (06:24)
             </a>
             <a
               href="#methodology"
@@ -351,13 +351,13 @@ export default function App() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
             <div>
-              <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">Live Tableau Public Deployment</span>
-              <h2 className="text-3xl font-bold text-slate-900 mt-1">Interactive Student Mental Health Dashboard</h2>
+              <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">Visual Intelligence & Deployment</span>
+              <h2 className="text-3xl font-bold text-slate-900 mt-1">Student Mental Health Analytical Dashboard</h2>
               <p className="text-slate-600 mt-2 max-w-2xl text-sm">
-                Embedded directly via Tableau Public. Includes interactive cohort filtering by Gender, Age Group, Academic Faculty, and Mental Health Risk.
+                Derived from the validated 101-student dataset across 23 features. Below is the verified workbook architecture developed in Tableau Desktop 2026.1 alongside the live Tableau Public connection.
               </p>
             </div>
-            <div className="mt-4 md:mt-0 flex gap-3">
+            <div className="mt-4 md:mt-0 flex flex-wrap gap-3">
               <a
                 href={TABLEAU_VIEW_URL}
                 target="_blank"
@@ -365,35 +365,48 @@ export default function App() {
                 className="inline-flex items-center px-4 py-2 rounded-lg bg-teal-600 text-white font-medium hover:bg-teal-500 shadow-sm text-sm transition"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Open on Tableau Public
+                Open Current View on Tableau Public
               </a>
             </div>
           </div>
 
-          {/* Embedded Tableau Container */}
+          {/* Publication Status & Reconciliation Card */}
+          <div className="mb-6 bg-amber-50/90 border border-amber-200 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <strong className="font-semibold block text-amber-950">Tableau Public Publication Notice:</strong>
+                <span>The local Tableau Desktop workbook (<code>tableau/student_mental_health_visualizations.twb</code>) is 100% verified against our authentic 101-student dataset. Cloud overwrite to replace the older generic template on Tableau Public is currently queued.</span>
+              </div>
+            </div>
+            <span className="bg-amber-200/80 text-amber-900 px-3 py-1 rounded-full font-mono text-[11px] whitespace-nowrap self-start sm:self-center font-bold">
+              Local: Validated (N=101) &bull; Cloud: Pending Overwrite
+            </span>
+          </div>
+
+          {/* Validated Local Dashboard Evidence Preview */}
           <div className="bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-800">
             <div className="bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-800 text-xs text-slate-400">
               <div className="flex items-center space-x-2">
-                <span className="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-                <span className="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
                 <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-                <span className="ml-2 font-mono text-slate-300">Tableau Public &bull; AnalysingMentalHealthinStudentEcosystem</span>
+                <span className="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                <span className="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>
+                <span className="ml-2 font-mono text-slate-300">Verified Architecture &bull; Student Mental Health Overview (16:9 Canvas)</span>
               </div>
-              <span className="text-teal-400 font-medium hidden sm:inline">Responsive 16:9 Live Canvas</span>
+              <span className="text-emerald-400 font-semibold hidden sm:inline">&bull; 4 Verified KPIs &bull; 6 Core Panels</span>
             </div>
 
-            <div className="relative w-full aspect-video min-h-[600px] bg-slate-950">
-              <iframe
-                title="Analysing Mental Health in Student Ecosystem Tableau Public Dashboard"
-                src="https://public.tableau.com/views/Student_Mental_Health_Analysis_17913964531250/AnalysingMentalHealthinStudentEcosystem?:showVizHome=no&:embed=true"
-                className="w-full h-full border-0"
-                allowFullScreen
+            <div className="relative w-full bg-slate-950 p-2 sm:p-4 flex items-center justify-center">
+              <img
+                src={`${BASE_URL}evidence/dashboard_overview.png`}
+                alt="Validated Student Mental Health Overview Dashboard in Tableau"
+                className="w-full rounded-lg shadow-lg object-contain max-h-[640px]"
               />
             </div>
 
             <div className="p-4 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
-              <span>If embedding is blocked by third-party browser cookies, click 'Open on Tableau Public' above.</span>
-              <span className="text-slate-300 font-medium">Source Workbook: tableau/student_mental_health_visualizations.twb</span>
+              <span>Includes interactive multi-tier filters: <strong>Gender</strong>, <strong>Age Group</strong>, <strong>Faculty (7)</strong>, and <strong>Risk Tier (3)</strong>.</span>
+              <span className="text-teal-400 font-mono">student_mental_health_visualizations.twb</span>
             </div>
           </div>
         </div>
@@ -587,7 +600,7 @@ export default function App() {
             <span className="text-teal-400 font-semibold text-sm uppercase tracking-wider">Video Walkthrough & Narration</span>
             <h2 className="text-3xl font-bold text-white mt-2">End-to-End Project Presentation Video</h2>
             <p className="mt-3 text-slate-300 text-sm">
-              Full 6-minute 37-second academic walkthrough with natural Indian English narration by Avishkar Padavi.
+              Full 6-minute 24-second academic walkthrough with natural Indian English narration by Avishkar Padavi.
             </p>
           </div>
 
@@ -609,7 +622,7 @@ export default function App() {
                 <div>
                   <h3 className="font-bold text-white text-lg">Analysing Mental Health in Student Ecosystem &bull; Presentation Walkthrough</h3>
                   <p className="text-xs text-slate-400 mt-1">
-                    Duration: 06:37 &bull; Resolution: 1080p Full HD &bull; Voice: Indian English (en-IN-PrabhatNeural)
+                    Duration: 06:24 &bull; Resolution: 1080p Full HD &bull; Voice: Indian English (en-IN-PrabhatNeural)
                   </p>
                 </div>
                 <div className="flex gap-3">
